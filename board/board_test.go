@@ -14,7 +14,7 @@ var _ = Describe("Board", func() {
 
 		It("creates a Three by Three board", func() {
 			expectedBoard := NewThreeByThree()
-			board, _ := NewBoard("threeByThree")
+			board, _ := NewBoard("3x3")
 			Expect(expectedBoard).To(Equal(board))
 		})
 	})
