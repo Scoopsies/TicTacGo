@@ -1,79 +1,22 @@
-package board_test
+package board
 
 import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-
-	sut "TicTacGo/board"
 )
 
 var _ = Describe("Board", func() {
-
-	var board *sut.Board
-
-	BeforeEach(func() {
-		board = sut.CreateBoard(3)
-	})
-
-	Context("Create Board", func() {
-		It("creates a board", func() {
-			By("Where the size is 3", func() {
-				Expect(board.GetSize()).To(Equal(3))
-			})
-
-			expectedCells := [][]string{
-				{"", "", ""},
-				{"", "", ""},
-				{"", "", ""},
-			}
-
-			By("the cells are a 3x3 slice", func() {
-				Expect(board.GetCells()).To(Equal(expectedCells))
-			})
-		})
-	})
-
-	Context("Make Move", func() {
-		It("returns an error if out of bounds", func() {
-			err := board.AddMove(20, 20)
-			Expect(err.Error()).To(ContainSubstring("out of bounds"))
+	Context("NewBoard", func() {
+		It("throws an error if unsupported board type:", func() {
+			_, err := NewBoard("Weird size")
+			Expect(err.Error()).To(ContainSubstring("unsupported board type: Weird size"))
 		})
 
-		It("returns an error if space already occupied", func() {
-			board.AddMove(0, 0)
-			err := board.AddMove(0, 0)
-			Expect(err.Error()).To(ContainSubstring("cell already occupied"))
+		It("creates a Three by Three board", func() {
+			expectedBoard := NewThreeByThree()
+			board, _ := NewBoard("threeByThree")
+			Expect(expectedBoard).To(Equal(board))
 		})
-
-		It("plays X on [0][0] for first turn", func() {
-			board.AddMove(0, 0)
-			cell00 := board.GetCells()[0][0]
-			Expect(cell00).To(Equal("X"))
-		})
-
-		It("plays O on second turn", func() {
-			board.AddMove(0, 0)
-			board.AddMove(1, 1)
-			cell11 := board.GetCells()[1][1]
-			Expect(cell11).To(Equal("O"))
-		})
-	})
-
-	Context("GetTurn", func() {
-		It("returns X on an empty board", func() {
-			Expect(board.GetTurn()).To(Equal("X"))
-		})
-
-		It("returns O on a board with a lone X on [0][0]", func() {
-			board.AddMove(0, 0)
-			Expect(board.GetTurn()).To(Equal("O"))
-		})
-
-		It("returns 0 on a board with a lone X on [1][1]", func() {
-			board.AddMove(1, 1)
-			Expect(board.GetTurn()).To(Equal("O"))
-		})
-
 	})
 
 })
