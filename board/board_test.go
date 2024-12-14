@@ -9,7 +9,7 @@ import (
 
 var _ = Describe("Board", func() {
 
-	var board sut.Board
+	var board *sut.Board
 
 	BeforeEach(func() {
 		board = sut.CreateBoard(3)
@@ -34,6 +34,17 @@ var _ = Describe("Board", func() {
 	})
 
 	Context("Make Move", func() {
+		It("returns an error if out of bounds", func() {
+			err := board.AddMove(20, 20)
+			Expect(err.Error()).To(ContainSubstring("out of bounds"))
+		})
+
+		It("returns an error if space already occupied", func() {
+			board.AddMove(0, 0)
+			err := board.AddMove(0, 0)
+			Expect(err.Error()).To(ContainSubstring("cell already occupied"))
+		})
+
 		It("plays X on [0][0] for first turn", func() {
 			board.AddMove(0, 0)
 			cell00 := board.GetCells()[0][0]
@@ -53,11 +64,12 @@ var _ = Describe("Board", func() {
 			Expect(board.GetTurn()).To(Equal("X"))
 		})
 
-		It("returns O on a board with a lone X on it", func() {
+		It("returns O on a board with a lone X on [0][0]", func() {
 			board.AddMove(0, 0)
 			Expect(board.GetTurn()).To(Equal("O"))
+		})
 
-			board = sut.CreateBoard(3)
+		It("returns 0 on a board with a lone X on [1][1]", func() {
 			board.AddMove(1, 1)
 			Expect(board.GetTurn()).To(Equal("O"))
 		})
