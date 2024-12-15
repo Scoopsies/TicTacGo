@@ -9,7 +9,7 @@ var _ = Describe("Player", func() {
 	Context("NewPlayer", func() {
 		It("returns an error if invalid player type", func() {
 			_, err := NewPlayer("invalid type")
-			Expect(err.Error()).To(ContainSubstring("invalid player type: invalid type"))
+			Expect(err.Error()).To(ContainSubstring("unsupported player type: invalid type"))
 		})
 
 		It("returns a human player", func() {

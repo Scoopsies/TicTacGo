@@ -14,6 +14,6 @@ func NewPlayer(playerType string) (Player, error) {
 	case "human":
 		return newHumanPlayer(), nil
 	default:
-		return nil, fmt.Errorf("invalid player type: %s", playerType)
+		return nil, fmt.Errorf("unsupported player type: %s", playerType)
 	}
 }

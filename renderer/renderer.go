@@ -14,6 +14,6 @@ func NewRenderer(renderType string) (Renderer, error) {
 	case "cli":
 		return newCliRenderer(), nil
 	default:
-		return nil, fmt.Errorf("invalid render type: %s", renderType)
+		return nil, fmt.Errorf("unsupported render type: %s", renderType)
 	}
 }

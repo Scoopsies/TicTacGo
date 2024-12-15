@@ -9,7 +9,7 @@ var _ = Describe("Renderer", func() {
 	Context("NewRenderer", func() {
 		It("returns an error if invalid renderer type", func() {
 			_, err := NewRenderer("invalid renderer")
-			Expect(err.Error()).To(ContainSubstring("invalid render type:"))
+			Expect(err.Error()).To(ContainSubstring("unsupported render type:"))
 		})
 
 		It("creates a cliRenderer", func() {
