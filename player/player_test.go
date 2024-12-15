@@ -8,13 +8,13 @@ import (
 var _ = Describe("Player", func() {
 	Context("NewPlayer", func() {
 		It("returns an error if invalid player type", func() {
-			_, err := NewPlayer("invalid type")
+			_, err := NewPlayer("invalid type", "Scoops")
 			Expect(err.Error()).To(ContainSubstring("unsupported player type: invalid type"))
 		})
 
 		It("returns a human player", func() {
-			player, _ := NewPlayer("human")
-			expectedPlayer := newHumanPlayer()
+			player, _ := NewPlayer("human", "Scoops")
+			expectedPlayer := newHumanPlayer("Scoops")
 			Expect(expectedPlayer).To(Equal(player))
 		})
 	})

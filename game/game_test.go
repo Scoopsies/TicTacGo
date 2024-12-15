@@ -13,9 +13,9 @@ var _ = Describe("Game", func() {
 	Context("newGame", func() {
 		Context("creates a game that", func() {
 
-			game, err := NewGame("3x3", "human", "human", "cli")
-			playerX, _ := player.NewPlayer("human")
-			playerO, _ := player.NewPlayer("human")
+			game, err := NewGame("3x3", "human", "X", "human", "O", "cli")
+			playerX, _ := player.NewPlayer("human", "X")
+			playerO, _ := player.NewPlayer("human", "O")
 			board, _ := board.NewBoard("3x3")
 			_renderer, _ := renderer.NewRenderer("cli")
 
@@ -46,24 +46,27 @@ var _ = Describe("Game", func() {
 
 		Context("has an error if", func() {
 			It("boardType is invalid", func() {
-				_, err := NewGame("bad board", "human", "human", "cli")
+				_, err := NewGame("bad board", "human", "X", "human", "O", "cli")
 				Expect(err.Error()).To(Equal("unsupported board type: bad board"))
 			})
 
 			It("playerTypeX is invalid", func() {
-				_, err := NewGame("3x3", "bad player", "human", "cli")
+				_, err := NewGame("3x3", "bad player", "X", "human", "O", "cli")
 				Expect(err.Error()).To(Equal("unsupported player type: bad player"))
 			})
 
 			It("playerTypeO is invalid", func() {
-				_, err := NewGame("3x3", "human", "bad player", "cli")
+				_, err := NewGame("3x3", "human", "X", "bad player", "O", "cli")
 				Expect(err.Error()).To(Equal("unsupported player type: bad player"))
 			})
 
 			It("renderType is invalid", func() {
-				_, err := NewGame("3x3", "human", "human", "bad renderer")
+				_, err := NewGame("3x3", "human", "X", "human", "O", "bad renderer")
 				Expect(err.Error()).To(Equal("unsupported render type: bad renderer"))
 			})
+		})
+
+		Context("PlayGame", func() {
 
 		})
 

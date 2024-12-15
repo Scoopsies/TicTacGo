@@ -2,7 +2,9 @@ package player
 
 import "TicTacGo/board"
 
-type human struct{}
+type human struct {
+	name string
+}
 
 type Position struct {
 	Row int
@@ -35,6 +37,13 @@ func (h human) PickMove(b board.Board, input string) (int, int) {
 	return position.Row, position.Col
 }
 
-func newHumanPlayer() *human {
-	return &human{}
+func (h human) GetName() string {
+	name := h.name
+	return name
+}
+
+func newHumanPlayer(name string) *human {
+	return &human{
+		name: name,
+	}
 }

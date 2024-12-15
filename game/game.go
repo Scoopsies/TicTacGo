@@ -14,10 +14,10 @@ type Game struct {
 	state    string
 }
 
-func NewGame(boardType, playerTypeX, playerTypeO, renderType string) (*Game, error) {
+func NewGame(boardType, playerTypeX, playerXName, playerTypeO, playerOName, renderType string) (*Game, error) {
 	_board, boardErr := board.NewBoard(boardType)
-	playerX, xErr := player.NewPlayer(playerTypeX)
-	playerO, oErr := player.NewPlayer(playerTypeO)
+	playerX, xErr := player.NewPlayer(playerTypeX, playerXName)
+	playerO, oErr := player.NewPlayer(playerTypeO, playerOName)
 	_renderer, renderErr := renderer.NewRenderer(renderType)
 
 	errs := []error{boardErr, xErr, oErr, renderErr}
