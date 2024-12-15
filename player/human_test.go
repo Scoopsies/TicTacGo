@@ -1,15 +1,14 @@
 package player
 
 import (
-	"TicTacGo/board"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 func testPickMove(input string, row, column int) {
-	threeByThree, _ := board.NewBoard("3x3")
+	emptyCells := [][]string{{""}}
 	player, _ := NewPlayer("human", "Scoops")
-	r, c := player.PickMove(threeByThree, input)
+	r, c := player.PickMove(emptyCells, "3x3", input)
 	Expect(r).To(Equal(row))
 	Expect(c).To(Equal(column))
 }

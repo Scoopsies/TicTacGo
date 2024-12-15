@@ -1,12 +1,11 @@
 package player
 
 import (
-	"TicTacGo/board"
 	"fmt"
 )
 
 type Player interface {
-	PickMove(board.Board, string) (int, int)
+	PickMove([][]string, string, string) (int, int)
 	GetName() string
 }
 

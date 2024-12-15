@@ -1,7 +1,5 @@
 package player
 
-import "TicTacGo/board"
-
 type human struct {
 	name string
 }
@@ -24,9 +22,9 @@ func getPosition(moveMap map[string]Position, input string) Position {
 	return Position{-1, -1}
 }
 
-func (h human) PickMove(b board.Board, input string) (int, int) {
+func (h human) PickMove(_ [][]string, boardSize, input string) (int, int) {
 	var moveMap map[string]Position
-	switch b.GetType() {
+	switch boardSize {
 	case "3x3":
 		moveMap = moveMap3x3
 	default:
