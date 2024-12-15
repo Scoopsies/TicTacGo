@@ -7,8 +7,16 @@ type ThreeByThree struct {
 	cells [][]string
 }
 
+func copyCells(cells [][]string) [][]string {
+	newCells := make([][]string, len(cells))
+	for i := range cells {
+		newCells[i] = append([]string{}, cells[i]...)
+	}
+	return newCells
+}
+
 func (b *ThreeByThree) GetCells() [][]string {
-	return b.cells
+	return copyCells(b.cells)
 }
 
 func countXO(cells [][]string) (int, int) {
@@ -53,6 +61,10 @@ func (b *ThreeByThree) AddMove(row, column int) error {
 	}
 	b.cells[row][column] = b.GetTurn()
 	return nil
+}
+
+func (b *ThreeByThree) GetType() string {
+	return "3x3"
 }
 
 func NewThreeByThree() *ThreeByThree {

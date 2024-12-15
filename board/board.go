@@ -6,6 +6,7 @@ type Board interface {
 	AddMove(row, column int) error
 	GetCells() [][]string
 	GetTurn() string
+	GetType() string
 }
 
 func NewBoard(boardType string) (Board, error) {
