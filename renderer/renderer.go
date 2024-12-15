@@ -1,12 +1,12 @@
 package renderer
 
 import (
-	"TicTacGo/board"
 	"fmt"
 )
 
 type Renderer interface {
-	Render(board board.Board)
+	Render(cells [][]string, boardSize string)
+	RenderMessage(message string)
 }
 
 func NewRenderer(renderType string) (Renderer, error) {

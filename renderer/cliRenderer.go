@@ -1,7 +1,6 @@
 package renderer
 
 import (
-	"TicTacGo/board"
 	"fmt"
 	"strconv"
 	"strings"
@@ -9,18 +8,21 @@ import (
 
 type cliRenderer struct{}
 
+func newCliRenderer() *cliRenderer {
+	return &cliRenderer{}
+}
+
 func addCellNumbers(cells [][]string) {
-	for row := 0; row < len(cells); row++ {
-		for col := 0; col < len(cells[row]); col++ {
-			if cells[row][col] == "" {
-				cells[row][col] = strconv.Itoa(row*len(cells) + col + 1)
+	for rowIdx, row := range cells {
+		for colIdx, cell := range row {
+			if cell == "" {
+				cells[rowIdx][colIdx] = strconv.Itoa(rowIdx*len(cells) + colIdx + 1)
 			}
 		}
 	}
 }
 
-func cellsToString3x3(board board.Board) string {
-	cells := board.GetCells()
+func cellsToString3x3(cells [][]string) string {
 	addCellNumbers(cells)
 	row1 := strings.Join(cells[0], " | ")
 	row2 := strings.Join(cells[1], " | ")
@@ -29,20 +31,20 @@ func cellsToString3x3(board board.Board) string {
 	return fmt.Sprintf(" %s \n %s \n %s ", row1, row2, row3)
 }
 
-func cellsToString(board board.Board) string {
-	switch board.GetType() {
+func cellsToString(cells [][]string, boardSize string) string {
+	switch boardSize {
 	case "3x3":
-		return cellsToString3x3(board)
+		return cellsToString3x3(cells)
 	default:
 		return ""
 	}
 }
 
-func (r cliRenderer) Render(board board.Board) {
-	cellString := cellsToString(board)
+func (r cliRenderer) Render(cells [][]string, boardSize string) {
+	cellString := cellsToString(cells, boardSize)
 	fmt.Println(cellString)
 }
 
-func newCliRenderer() *cliRenderer {
-	return &cliRenderer{}
+func (r cliRenderer) RenderMessage(message string) {
+	fmt.Println(message)
 }

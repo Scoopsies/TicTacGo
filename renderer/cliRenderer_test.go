@@ -1,7 +1,6 @@
 package renderer
 
 import (
-	"TicTacGo/board"
 	"bytes"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -9,11 +8,15 @@ import (
 )
 
 var _ = Describe("CliRenderer", func() {
-
-	var board3x3 board.Board
+	boardSize := "3x3"
+	var cells [][]string
 
 	BeforeEach(func() {
-		board3x3, _ = board.NewBoard("3x3")
+		cells = [][]string{
+			{"", "", ""},
+			{"", "", ""},
+			{"", "", ""},
+		}
 	})
 
 	Context("cellsToString", func() {
@@ -21,15 +24,15 @@ var _ = Describe("CliRenderer", func() {
 			expected := " 1 | 2 | 3 \n" +
 				" 4 | 5 | 6 \n" +
 				" 7 | 8 | 9 "
-			Expect(expected).To(Equal(cellsToString(board3x3)))
+			Expect(expected).To(Equal(cellsToString(cells, boardSize)))
 		})
 
 		It("Converts a board that's been played on to string", func() {
 			expected := " X | 2 | 3 \n" +
 				" 4 | 5 | 6 \n" +
 				" 7 | 8 | 9 "
-			board3x3.AddMove(0, 0)
-			Expect(expected).To(Equal(cellsToString(board3x3)))
+			cells[0][0] = "X"
+			Expect(expected).To(Equal(cellsToString(cells, boardSize)))
 		})
 	})
 
@@ -42,7 +45,7 @@ var _ = Describe("CliRenderer", func() {
 			os.Stdout = writer
 
 			renderer := newCliRenderer()
-			renderer.Render(board3x3)
+			renderer.Render(cells, boardSize)
 
 			writer.Close()
 			os.Stdout = originalStdout
@@ -51,7 +54,7 @@ var _ = Describe("CliRenderer", func() {
 			_, err = buffer.ReadFrom(reader)
 			Expect(err).To(BeNil())
 
-			expected := cellsToString(board3x3) + "\n"
+			expected := cellsToString(cells, boardSize) + "\n"
 
 			Expect(buffer.String()).To(Equal(expected))
 		})
