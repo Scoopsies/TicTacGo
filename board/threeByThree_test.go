@@ -1,6 +1,7 @@
 package board
 
 import (
+	"TicTacGo/core"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -106,8 +107,8 @@ func threeByThreeTests() {
 			board.AddMove(2, 2)
 			board.AddMove(0, 2)
 			cells := board.GetCells()
-			Expect(hasWin(cells, "X")).To(BeFalse())
-			Expect(hasWin(cells, "O")).To(BeTrue())
+			Expect(core.HasWin(cells, "X")).To(BeFalse())
+			Expect(core.HasWin(cells, "O")).To(BeTrue())
 			Expect(board.GetState()).To(Equal("winO"))
 		})
 
@@ -122,8 +123,8 @@ func threeByThreeTests() {
 			board.AddMove(2, 2)
 			board.AddMove(2, 0)
 			cells := board.GetCells()
-			Expect(hasWin(cells, "X")).To(BeFalse())
-			Expect(hasWin(cells, "O")).To(BeFalse())
+			Expect(core.HasWin(cells, "X")).To(BeFalse())
+			Expect(core.HasWin(cells, "O")).To(BeFalse())
 			Expect(board.GetState()).To(Equal("draw"))
 		})
 	})

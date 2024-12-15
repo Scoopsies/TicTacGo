@@ -1,6 +1,9 @@
 package board
 
-import "fmt"
+import (
+	"TicTacGo/core"
+	"fmt"
+)
 
 type ThreeByThree struct {
 	size  int
@@ -15,7 +18,7 @@ func NewThreeByThree() *ThreeByThree {
 }
 
 func (b *ThreeByThree) GetCells() [][]string {
-	return copyCells(b.cells)
+	return core.CopyCells(b.cells)
 }
 
 func countXO(cells [][]string) (int, int) {
@@ -81,9 +84,9 @@ func hasNoValidMoves(cells [][]string) bool {
 
 func (b *ThreeByThree) GetState() string {
 	switch {
-	case hasWin(b.cells, "X"):
+	case core.HasWin(b.cells, "X"):
 		return "winX"
-	case hasWin(b.cells, "O"):
+	case core.HasWin(b.cells, "O"):
 		return "winO"
 	case hasNoValidMoves(b.cells):
 		return "draw"

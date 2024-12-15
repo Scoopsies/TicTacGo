@@ -1,4 +1,4 @@
-package board
+package core
 
 import (
 	. "github.com/onsi/ginkgo/v2"
@@ -7,27 +7,51 @@ import (
 
 var _ = Describe("WinConditions", func() {
 
-	var board Board
+	emptyCells := [][]string{
+		{"", "", ""},
+		{"", "", ""},
+		{"", "", ""},
+	}
 
-	BeforeEach(func() {
-		board, _ = NewBoard("3x3")
-	})
+	topRowMatch := [][]string{
+		{"X", "X", "X"},
+		{"O", "O", ""},
+		{"", "", ""},
+	}
+
+	leftColumnMatch := [][]string{
+		{"X", "O", "O"},
+		{"X", "", ""},
+		{"X", "", ""},
+	}
+
+	diagonalMatch := [][]string{
+		{"X", "", "O"},
+		{"", "X", ""},
+		{"O", "", "X"},
+	}
+
+	drawnCells := [][]string{
+		{"X", "X", "O"},
+		{"O", "X", "X"},
+		{"X", "O", "O"},
+	}
+
+	oWin := [][]string{
+		{"O", "O", "O"},
+		{"", "", ""},
+		{"X", "X", ""},
+	}
 
 	Context("win checkers", func() {
 		Context("hasRowWin", func() {
 			It("returns false for an empty board", func() {
-				cells := board.GetCells()
-				Expect(hasRowWin(cells, "X")).To(BeFalse())
-				Expect(hasRowWin(cells, "O")).To(BeFalse())
+				Expect(hasRowWin(emptyCells, "X")).To(BeFalse())
+				Expect(hasRowWin(emptyCells, "O")).To(BeFalse())
 			})
 
 			It("returns true for a top row matches", func() {
-				cells := [][]string{
-					{"X", "X", "X"},
-					{"O", "O", ""},
-					{"", "", ""},
-				}
-				Expect(hasRowWin(cells, "X")).To(BeTrue())
+				Expect(hasRowWin(topRowMatch, "X")).To(BeTrue())
 			})
 
 			It("returns true for a middle row matches", func() {
@@ -49,30 +73,19 @@ var _ = Describe("WinConditions", func() {
 			})
 
 			It("returns true if O win", func() {
-				cells := [][]string{
-					{"O", "O", "O"},
-					{"", "", ""},
-					{"X", "X", ""},
-				}
-				Expect(hasRowWin(cells, "O")).To(BeTrue())
+				Expect(hasRowWin(oWin, "O")).To(BeTrue())
 			})
 
 		})
 
 		Context("hasColWin", func() {
 			It("returns false if no column wins", func() {
-				cells := board.GetCells()
-				Expect(hasColWin(cells, "X")).To(BeFalse())
-				Expect(hasColWin(cells, "O")).To(BeFalse())
+				Expect(hasColWin(emptyCells, "X")).To(BeFalse())
+				Expect(hasColWin(emptyCells, "O")).To(BeFalse())
 			})
 
 			It("returns true if first column matches", func() {
-				cells := [][]string{
-					{"X", "O", "O"},
-					{"X", "", ""},
-					{"X", "", ""},
-				}
-				Expect(hasColWin(cells, "X")).To(BeTrue())
+				Expect(hasColWin(leftColumnMatch, "X")).To(BeTrue())
 			})
 
 			It("returns true if second column matches", func() {
@@ -105,17 +118,11 @@ var _ = Describe("WinConditions", func() {
 
 		Context("hasDiagonalWin", func() {
 			It("returns false if no matching diagonals", func() {
-				cells := board.GetCells()
-				Expect(hasDiagonalWin(cells, "X")).To(BeFalse())
+				Expect(hasDiagonalWin(emptyCells, "X")).To(BeFalse())
 			})
 
 			It("returns true if matching forward diagonal", func() {
-				cells := [][]string{
-					{"X", "", "O"},
-					{"", "X", ""},
-					{"O", "", "X"},
-				}
-				Expect(hasDiagonalWin(cells, "X")).To(BeTrue())
+				Expect(hasDiagonalWin(diagonalMatch, "X")).To(BeTrue())
 			})
 
 			It("returns true if matching backwards diagonal", func() {
@@ -131,50 +138,27 @@ var _ = Describe("WinConditions", func() {
 
 	Context("hasWin", func() {
 		It("returns false for an empty board", func() {
-			cells := board.GetCells()
-			Expect(hasWin(cells, "X")).To(BeFalse())
+			Expect(HasWin(emptyCells, "X")).To(BeFalse())
+		})
+
+		It("returns true for a draw game", func() {
+			Expect(HasWin(drawnCells, "O")).To(BeFalse())
 		})
 
 		It("returns true for a row win", func() {
-			board.AddMove(0, 0)
-			board.AddMove(1, 0)
-			board.AddMove(0, 1)
-			board.AddMove(1, 1)
-			board.AddMove(0, 2)
-			cells := board.GetCells()
-			Expect(hasWin(cells, "X")).To(BeTrue())
+			Expect(HasWin(topRowMatch, "X")).To(BeTrue())
 		})
 
 		It("returns true for a column win", func() {
-			board.AddMove(0, 0)
-			board.AddMove(0, 1)
-			board.AddMove(1, 0)
-			board.AddMove(0, 2)
-			board.AddMove(2, 0)
-			cells := board.GetCells()
-			Expect(hasWin(cells, "X")).To(BeTrue())
+			Expect(HasWin(leftColumnMatch, "X")).To(BeTrue())
 		})
 
 		It("returns true for a diagonal win", func() {
-			board.AddMove(0, 0)
-			board.AddMove(0, 1)
-			board.AddMove(1, 1)
-			board.AddMove(0, 2)
-			board.AddMove(2, 2)
-			cells := board.GetCells()
-			Expect(hasWin(cells, "X")).To(BeTrue())
+			Expect(HasWin(diagonalMatch, "X")).To(BeTrue())
 		})
 
-		It("returns true for a O wins", func() {
-			board.AddMove(1, 0)
-			board.AddMove(0, 0)
-			board.AddMove(1, 1)
-			board.AddMove(0, 1)
-			board.AddMove(2, 2)
-			board.AddMove(0, 2)
-			cells := board.GetCells()
-			Expect(hasWin(cells, "O")).To(BeTrue())
+		It("returns true if O wins", func() {
+			Expect(HasWin(oWin, "O")).To(BeTrue())
 		})
-
 	})
 })

@@ -18,11 +18,3 @@ func NewBoard(boardType string) (Board, error) {
 		return nil, fmt.Errorf("unsupported board type: %s", boardType)
 	}
 }
-
-func copyCells(cells [][]string) [][]string {
-	newCells := make([][]string, len(cells))
-	for i := range cells {
-		newCells[i] = append([]string{}, cells[i]...)
-	}
-	return newCells
-}

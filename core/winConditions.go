@@ -1,4 +1,4 @@
-package board
+package core
 
 func allMatch(row []string, token string) bool {
 	for _, cell := range row {
@@ -20,7 +20,7 @@ func hasRowWin(cells [][]string, token string) bool {
 
 func rotateCells(cells [][]string) [][]string {
 	numRows := len(cells)
-	rotatedCells := copyCells(cells)
+	rotatedCells := CopyCells(cells)
 
 	for rowIdx, row := range cells {
 		for colIdx, cell := range row {
@@ -36,7 +36,7 @@ func hasColWin(cells [][]string, token string) bool {
 }
 
 func mirrorCells(cells [][]string) [][]string {
-	mirroredCells := copyCells(cells)
+	mirroredCells := CopyCells(cells)
 
 	for rowIdx, row := range cells {
 		for colIdx, cell := range row {
@@ -60,6 +60,6 @@ func hasDiagonalWin(cells [][]string, token string) bool {
 	return hasForwardDiagonalWin(cells, token) || hasForwardDiagonalWin(mirroredCells, token)
 }
 
-func hasWin(cells [][]string, token string) bool {
+func HasWin(cells [][]string, token string) bool {
 	return hasRowWin(cells, token) || hasColWin(cells, token) || hasDiagonalWin(cells, token)
 }
