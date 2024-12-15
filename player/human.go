@@ -15,7 +15,7 @@ var moveMap3x3 = map[string]Position{
 	"7": {2, 0}, "8": {2, 1}, "9": {2, 2},
 }
 
-func GetPosition(moveMap map[string]Position, input string) Position {
+func getPosition(moveMap map[string]Position, input string) Position {
 	if position, ok := moveMap[input]; ok {
 		return position
 	}
@@ -31,7 +31,7 @@ func (h human) PickMove(b board.Board, input string) (int, int) {
 		return -1, -1
 	}
 
-	position := GetPosition(moveMap, input)
+	position := getPosition(moveMap, input)
 	return position.Row, position.Col
 }
 
