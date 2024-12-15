@@ -6,7 +6,7 @@ import (
 )
 
 type Player interface {
-	PickMove(board board.Board)
+	PickMove(board.Board, string) (int, int)
 }
 
 func NewPlayer(playerType string) (Player, error) {
