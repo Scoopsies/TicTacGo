@@ -83,4 +83,48 @@ func threeByThreeTests() {
 			Expect(board.GetType()).To(Equal("3x3"))
 		})
 	})
+
+	Context("GetState", func() {
+		It("returns in progress for a new game", func() {
+			Expect(board.GetState()).To(Equal("inProgress"))
+		})
+
+		It("returns winX if x wins", func() {
+			board.AddMove(0, 0)
+			board.AddMove(1, 0)
+			board.AddMove(0, 1)
+			board.AddMove(1, 1)
+			board.AddMove(0, 2)
+			Expect(board.GetState()).To(Equal("winX"))
+		})
+
+		It("returns winO if o wins", func() {
+			board.AddMove(1, 0)
+			board.AddMove(0, 0)
+			board.AddMove(1, 1)
+			board.AddMove(0, 1)
+			board.AddMove(2, 2)
+			board.AddMove(0, 2)
+			cells := board.GetCells()
+			Expect(hasWin(cells, "X")).To(BeFalse())
+			Expect(hasWin(cells, "O")).To(BeTrue())
+			Expect(board.GetState()).To(Equal("winO"))
+		})
+
+		It("returns draw if no wins and no moves left", func() {
+			board.AddMove(0, 0)
+			board.AddMove(0, 2)
+			board.AddMove(0, 1)
+			board.AddMove(1, 0)
+			board.AddMove(1, 1)
+			board.AddMove(2, 1)
+			board.AddMove(1, 2)
+			board.AddMove(2, 2)
+			board.AddMove(2, 0)
+			cells := board.GetCells()
+			Expect(hasWin(cells, "X")).To(BeFalse())
+			Expect(hasWin(cells, "O")).To(BeFalse())
+			Expect(board.GetState()).To(Equal("draw"))
+		})
+	})
 }

@@ -7,12 +7,11 @@ type ThreeByThree struct {
 	cells [][]string
 }
 
-func copyCells(cells [][]string) [][]string {
-	newCells := make([][]string, len(cells))
-	for i := range cells {
-		newCells[i] = append([]string{}, cells[i]...)
+func NewThreeByThree() *ThreeByThree {
+	return &ThreeByThree{
+		size:  3,
+		cells: [][]string{{"", "", ""}, {"", "", ""}, {"", "", ""}},
 	}
-	return newCells
 }
 
 func (b *ThreeByThree) GetCells() [][]string {
@@ -21,11 +20,12 @@ func (b *ThreeByThree) GetCells() [][]string {
 
 func countXO(cells [][]string) (int, int) {
 	xCount, oCount := 0, 0
-	for row := 0; row < len(cells); row++ {
-		for col := 0; col < len(cells); col++ {
-			if cells[row][col] == "X" {
+	for _, row := range cells {
+		for _, cell := range row {
+			switch cell {
+			case "X":
 				xCount++
-			} else if cells[row][col] == "O" {
+			case "O":
 				oCount++
 			}
 		}
@@ -53,23 +53,41 @@ func isOccupied(b *ThreeByThree, row, column int) bool {
 }
 
 func (b *ThreeByThree) AddMove(row, column int) error {
-	if isNotInBounds(b, row, column) {
+	switch {
+	case isNotInBounds(b, row, column):
 		return fmt.Errorf("invalid move: out of bounds")
-	}
-	if isOccupied(b, row, column) {
+	case isOccupied(b, row, column):
 		return fmt.Errorf("invalid move: cell already occupied")
+	default:
+		b.cells[row][column] = b.GetTurn()
+		return nil
 	}
-	b.cells[row][column] = b.GetTurn()
-	return nil
 }
 
 func (b *ThreeByThree) GetType() string {
 	return "3x3"
 }
 
-func NewThreeByThree() *ThreeByThree {
-	return &ThreeByThree{
-		size:  3,
-		cells: [][]string{{"", "", ""}, {"", "", ""}, {"", "", ""}},
+func hasNoValidMoves(cells [][]string) bool {
+	for _, row := range cells {
+		for _, cell := range row {
+			if cell == "" {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func (b *ThreeByThree) GetState() string {
+	switch {
+	case hasWin(b.cells, "X"):
+		return "winX"
+	case hasWin(b.cells, "O"):
+		return "winO"
+	case hasNoValidMoves(b.cells):
+		return "draw"
+	default:
+		return "inProgress"
 	}
 }
