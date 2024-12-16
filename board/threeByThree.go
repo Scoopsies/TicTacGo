@@ -18,31 +18,8 @@ func NewThreeByThree() *ThreeByThree {
 }
 
 func (b *ThreeByThree) GetCells() [][]string {
+
 	return core.CopyCells(b.cells)
-}
-
-func countXO(cells [][]string) (int, int) {
-	xCount, oCount := 0, 0
-	for _, row := range cells {
-		for _, cell := range row {
-			switch cell {
-			case "X":
-				xCount++
-			case "O":
-				oCount++
-			}
-		}
-	}
-	return xCount, oCount
-}
-
-func (b *ThreeByThree) GetTurn() string {
-	cells := b.cells
-	xCount, oCount := countXO(cells)
-	if xCount > oCount {
-		return "O"
-	}
-	return "X"
 }
 
 func isNotInBounds(b *ThreeByThree, row, column int) bool {
@@ -62,7 +39,7 @@ func (b *ThreeByThree) AddMove(row, column int) error {
 	case isOccupied(b, row, column):
 		return fmt.Errorf("invalid move: cell already occupied")
 	default:
-		b.cells[row][column] = b.GetTurn()
+		b.cells[row][column] = core.GetCurrentToken(b.cells)
 		return nil
 	}
 }

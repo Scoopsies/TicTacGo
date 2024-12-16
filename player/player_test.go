@@ -17,6 +17,12 @@ var _ = Describe("Player", func() {
 			expectedPlayer := newHumanPlayer("Scoops")
 			Expect(expectedPlayer).To(Equal(player))
 		})
+
+		It("returns an aiHard player", func() {
+			player, _ := NewPlayer("aiHard", "Computer")
+			expectedPlayer := newAiHardPlayer("Computer")
+			Expect(expectedPlayer).To(Equal(player))
+		})
 	})
 
 })

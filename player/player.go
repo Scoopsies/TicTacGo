@@ -13,6 +13,8 @@ func NewPlayer(playerType, name string) (Player, error) {
 	switch playerType {
 	case "human":
 		return newHumanPlayer(name), nil
+	case "aiHard":
+		return newAiHardPlayer(name), nil
 	default:
 		return nil, fmt.Errorf("unsupported player type: %s", playerType)
 	}

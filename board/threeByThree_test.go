@@ -62,23 +62,6 @@ func threeByThreeTests() {
 		})
 	})
 
-	Context("GetTurn", func() {
-		It("returns X on an empty board", func() {
-			Expect(board.GetTurn()).To(Equal("X"))
-		})
-
-		It("returns O on a board with a lone X on [0][0]", func() {
-			board.AddMove(0, 0)
-			Expect(board.GetTurn()).To(Equal("O"))
-		})
-
-		It("returns 0 on a board with a lone X on [1][1]", func() {
-			board.AddMove(1, 1)
-			Expect(board.GetTurn()).To(Equal("O"))
-		})
-
-	})
-
 	Context("GetType", func() {
 		It("returns 3x3", func() {
 			Expect(board.GetType()).To(Equal("3x3"))

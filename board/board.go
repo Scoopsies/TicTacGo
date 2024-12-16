@@ -5,7 +5,6 @@ import "fmt"
 type Board interface {
 	AddMove(row, column int) error
 	GetCells() [][]string
-	GetTurn() string
 	GetType() string
 	GetState() string
 }
