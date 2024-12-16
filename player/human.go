@@ -3,12 +3,14 @@ package player
 import "TicTacGo/interfaces"
 
 type Human struct {
-	name string
+	name  string
+	input interfaces.Input
 }
 
-func NewHumanPlayer(name string) *Human {
+func NewHumanPlayer(name string, input interfaces.Input) *Human {
 	return &Human{
-		name: name,
+		name:  name,
+		input: input,
 	}
 }
 
@@ -25,7 +27,7 @@ var moveMap3x3 = map[string][2]int{
 	"7": {2, 0}, "8": {2, 1}, "9": {2, 2},
 }
 
-func (h Human) PickMove(board interfaces.Board, input string) (int, int) {
+func (h Human) PickMove(board interfaces.Board) (int, int) {
 	var moveMap map[string][2]int
 	switch board.GetType() {
 	case "3x3":
@@ -34,6 +36,7 @@ func (h Human) PickMove(board interfaces.Board, input string) (int, int) {
 		return -1, -1
 	}
 
+	input := h.input.GetInput()
 	row, col := getPosition(moveMap, input)
 	return row, col
 }

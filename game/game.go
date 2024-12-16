@@ -1,7 +1,6 @@
 package game
 
 import (
-	"TicTacGo/factory"
 	"TicTacGo/interfaces"
 )
 
@@ -10,27 +9,41 @@ type Game struct {
 	playerX  interfaces.Player
 	playerO  interfaces.Player
 	renderer interfaces.Renderer
-	state    string
 }
 
-func NewGame(boardType, playerTypeX, playerXName, playerTypeO, playerOName, renderType string) (*Game, error) {
-	board, boardErr := factory.NewBoard(boardType)
-	playerX, xErr := factory.NewPlayer(playerTypeX, playerXName)
-	playerO, oErr := factory.NewPlayer(playerTypeO, playerOName)
-	renderer, renderErr := factory.NewRenderer(renderType)
-
-	errs := []error{boardErr, xErr, oErr, renderErr}
-	for _, err := range errs {
-		if err != nil {
-			return nil, err
-		}
-	}
-
+func NewGame(board interfaces.Board, playerX, playerO interfaces.Player, renderer interfaces.Renderer) *Game {
 	return &Game{
 		board:    board,
 		playerX:  playerX,
 		playerO:  playerO,
 		renderer: renderer,
-		state:    "inProgress",
-	}, nil
+	}
+}
+
+func PlayGame(game *Game) {
+	board := game.board
+	playerX := game.playerX
+	playerO := game.playerO
+	renderer := game.renderer
+	gameState := board.GetState()
+
+	for gameState == "inProgress" {
+		renderer.Render(board)
+
+		var currentPlayer interfaces.Player
+		if board.GetTurn() == "X" {
+			currentPlayer = playerX
+		} else {
+			currentPlayer = playerO
+		}
+		renderer.RenderMessage("It's " + currentPlayer.GetName() + "'s turn.")
+		err := board.AddMove(currentPlayer.PickMove(board))
+
+		if err != nil {
+			renderer.RenderMessage(err.Error())
+		}
+		gameState = board.GetState()
+	}
+
+	renderer.Render(board)
 }

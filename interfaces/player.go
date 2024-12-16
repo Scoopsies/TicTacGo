@@ -1,6 +1,6 @@
 package interfaces
 
 type Player interface {
-	PickMove(Board, string) (int, int)
+	PickMove(Board) (int, int)
 	GetName() string
 }

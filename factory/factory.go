@@ -18,10 +18,10 @@ func NewBoard(boardType string) (interfaces.Board, error) {
 	}
 }
 
-func NewPlayer(playerType, name string) (interfaces.Player, error) {
+func NewPlayer(playerType, name string, input interfaces.Input) (interfaces.Player, error) {
 	switch playerType {
 	case "human":
-		return player.NewHumanPlayer(name), nil
+		return player.NewHumanPlayer(name, input), nil
 	default:
 		return nil, fmt.Errorf("unsupported player type: %s", playerType)
 	}

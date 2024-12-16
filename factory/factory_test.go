@@ -23,15 +23,29 @@ var _ = Describe("Board", func() {
 		})
 	})
 
+	Context("NewInput", func() {
+		It("throws an error if unknown render type", func() {
+			_, err := NewInput("bad render type")
+			Expect(err.Error()).To(ContainSubstring("invalid render type: bad render type"))
+		})
+
+		It("returns a cliInput", func() {
+			cliInput, _ := NewInput("cli")
+			Expect(cliInput).To(Equal(input.NewCliInput()))
+		})
+	})
+
 	Context("NewPlayer", func() {
+		input, _ := NewInput("cli")
+
 		It("returns an error if invalid player type", func() {
-			_, err := NewPlayer("invalid type", "Scoops")
+			_, err := NewPlayer("invalid type", "Scoops", input)
 			Expect(err.Error()).To(ContainSubstring("unsupported player type: invalid type"))
 		})
 
 		It("returns a human player", func() {
-			human, _ := NewPlayer("human", "Scoops")
-			expectedPlayer := player.NewHumanPlayer("Scoops")
+			human, _ := NewPlayer("human", "Scoops", input)
+			expectedPlayer := player.NewHumanPlayer("Scoops", input)
 			Expect(expectedPlayer).To(Equal(human))
 		})
 	})
@@ -49,15 +63,4 @@ var _ = Describe("Board", func() {
 		})
 	})
 
-	Context("NewInput", func() {
-		It("throws an error if unknown render type", func() {
-			_, err := NewInput("bad render type")
-			Expect(err.Error()).To(ContainSubstring("invalid render type: bad render type"))
-		})
-
-		It("returns a cliInput", func() {
-			cliInput, _ := NewInput("cli")
-			Expect(cliInput).To(Equal(input.NewCliInput()))
-		})
-	})
 })
