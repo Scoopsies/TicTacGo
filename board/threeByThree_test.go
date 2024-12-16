@@ -133,4 +133,28 @@ func threeByThreeTests() {
 			Expect(board.GetTurn()).To(Equal("X"))
 		})
 	})
+
+	Context("WouldWin()", func() {
+		It("returns false if sent invalid position", func() {
+			Expect(board.WouldWin([]int{-1, -1})).To(BeFalse())
+		})
+
+		It("returns false if position is already occupied", func() {
+			position := []int{0, 1}
+			board.AddMove([]int{0, 0})
+			board.AddMove(position)
+			board.AddMove([]int{0, 2})
+			board.AddMove([]int{1, 1})
+			Expect(board.WouldWin(position)).To(BeFalse())
+		})
+
+		It("returns true if it would result in a win for X", func() {
+			board.AddMove([]int{0, 0})
+			board.AddMove([]int{1, 0})
+			board.AddMove([]int{0, 1})
+			board.AddMove([]int{1, 1})
+			Expect(board.WouldWin([]int{0, 2})).To(BeTrue())
+		})
+
+	})
 }

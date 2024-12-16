@@ -13,6 +13,10 @@ type MockBoard struct {
 	errorMove bool
 }
 
+func (m *MockBoard) WouldWin(position []int) bool {
+	return true
+}
+
 func (m *MockBoard) AddMove(position []int) error {
 	m.Called = append(m.Called, "AddMove")
 	m.moves = append(m.moves, position)

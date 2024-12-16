@@ -17,7 +17,7 @@ func (m mockInput) GetInput() string {
 
 func testPickMove(input interfaces.Input, row, column int) {
 	player := sut.NewHuman("Scoops", input)
-	move := player.PickMove(mockBoard{"3x3"})
+	move := player.PickMove(mockBoard{size: "3x3"})
 	Expect(move).To(Equal([]int{row, column}))
 }
 
@@ -26,7 +26,7 @@ var _ = Describe("Human", func() {
 		Context("invalid board size", func() {
 			It("returns -1 -1 if invalid board size", func() {
 				player := sut.NewHuman("Scoops", mockInput{"1"})
-				move := player.PickMove(mockBoard{"invalid type"})
+				move := player.PickMove(mockBoard{size: "invalid type"})
 				Expect(move).To(Equal([]int{-1, -1}))
 			})
 		})

@@ -1,16 +1,33 @@
 package player_test
 
+import "fmt"
+
 type mockBoard struct {
-	size string
+	size           string
+	winRow         int
+	winCol         int
+	isWin          bool
+	availableMoves [][]int
+	turn           string
 }
 
-func (m mockBoard) GetTurn() string { return "" }
+func (m mockBoard) WouldWin(position []int) bool {
+	return true
+}
+
+func (m mockBoard) GetTurn() string { return m.turn }
 
 func (m mockBoard) GetAvailableMoves() [][]int {
-	return nil
+	return m.availableMoves
 }
 
-func (m mockBoard) AddMove(_ []int) error {
+func (m mockBoard) AddMove(move []int) error {
+	if move[0] == m.winRow && move[1] == m.winCol {
+		m.isWin = true
+		fmt.Println("")
+		fmt.Print(move)
+		fmt.Println(" triggered a win")
+	}
 	return nil
 }
 
@@ -23,5 +40,9 @@ func (m mockBoard) GetType() string {
 }
 
 func (m mockBoard) GetState() string {
-	return ""
+	if m.isWin {
+		fmt.Println("dropped a token")
+		return m.turn
+	}
+	return "O"
 }

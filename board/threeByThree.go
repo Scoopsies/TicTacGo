@@ -7,6 +7,18 @@ type ThreeByThree struct {
 	cells [][]string
 }
 
+func (b *ThreeByThree) WouldWin(position []int) bool {
+	row, col := position[0], position[1]
+	if isNotInBounds(b, row, col) || isOccupied(b, row, col) {
+		return false
+	}
+
+	token := b.GetTurn()
+	cells := b.GetCells()
+	cells[row][col] = token
+	return HasWin(cells, token)
+}
+
 func NewThreeByThree() *ThreeByThree {
 	return &ThreeByThree{
 		size:  3,

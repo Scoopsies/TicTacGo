@@ -1,6 +1,8 @@
 package player
 
-import "TicTacGo/interfaces"
+import (
+	"TicTacGo/interfaces"
+)
 
 type AiHard struct {
 	Name string
@@ -13,7 +15,9 @@ func NewAiHard(name string) *AiHard {
 }
 
 func (a AiHard) PickMove(board interfaces.Board) []int {
-	return nil
+	availableMoves := board.GetAvailableMoves()
+
+	return availableMoves[0]
 }
 
 func (a AiHard) GetName() string {
