@@ -15,6 +15,16 @@ func testPickMove(input string, row, column int) {
 
 var _ = Describe("Human", func() {
 	Context("PickMove", func() {
+		Context("invalid board size", func() {
+			It("returns -1 -1 if invalid board size", func() {
+				emptyCells := [][]string{{""}}
+				player, _ := NewPlayer("human", "Scoops")
+				r, c := player.PickMove(emptyCells, "invalid board", "1")
+				Expect(r).To(Equal(-1))
+				Expect(c).To(Equal(-1))
+			})
+		})
+
 		Context("3x3 board", func() {
 			It("returns 0 0 if player inputs 1", func() {
 				testPickMove("1", 0, 0)
