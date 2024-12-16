@@ -7,7 +7,7 @@ type Human struct {
 	input interfaces.Input
 }
 
-func NewHumanPlayer(name string, input interfaces.Input) *Human {
+func NewHuman(name string, input interfaces.Input) *Human {
 	return &Human{
 		name:  name,
 		input: input,

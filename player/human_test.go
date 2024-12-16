@@ -42,7 +42,7 @@ func (m mockInput) GetInput() string {
 }
 
 func testPickMove(input interfaces.Input, row, column int) {
-	player := NewHumanPlayer("Scoops", input)
+	player := NewHuman("Scoops", input)
 	move := player.PickMove(mockBoard{"3x3"})
 	Expect(move).To(Equal([]int{row, column}))
 }
@@ -51,7 +51,7 @@ var _ = Describe("Human", func() {
 	Context("PickMove", func() {
 		Context("invalid board size", func() {
 			It("returns -1 -1 if invalid board size", func() {
-				player := NewHumanPlayer("Scoops", mockInput{"1"})
+				player := NewHuman("Scoops", mockInput{"1"})
 				move := player.PickMove(mockBoard{"invalid type"})
 				Expect(move).To(Equal([]int{-1, -1}))
 			})
@@ -106,8 +106,8 @@ var _ = Describe("Human", func() {
 
 	Context("GetName", func() {
 		It("returns the name of the player", func() {
-			player1 := NewHumanPlayer("Scoops", mockInput{})
-			player2 := NewHumanPlayer("Alex", mockInput{})
+			player1 := NewHuman("Scoops", mockInput{})
+			player2 := NewHuman("Alex", mockInput{})
 			Expect(player1.GetName()).To(Equal("Scoops"))
 			Expect(player2.GetName()).To(Equal("Alex"))
 		})
