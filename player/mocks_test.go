@@ -6,13 +6,16 @@ type mockBoard struct {
 	size           string
 	winRow         int
 	winCol         int
+	blockRow       int
+	blockCol       int
 	isWin          bool
 	availableMoves [][]int
 	turn           string
 }
 
 func (m mockBoard) WouldWin(position []int) bool {
-	return true
+	row, col := position[0], position[1]
+	return row == m.winRow && col == m.winCol
 }
 
 func (m mockBoard) GetTurn() string { return m.turn }

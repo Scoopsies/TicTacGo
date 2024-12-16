@@ -25,7 +25,7 @@ var _ = Describe("AiHard", func() {
 		Context("picks a win when available", func() {
 			It("if 0,0 is a winning move", func() {
 				winningMove := []int{0, 0}
-				board := mockBoard{winRow: 0, winCol: 0, turn: "X", availableMoves: [][]int{winningMove}}
+				board := mockBoard{turn: "X", availableMoves: [][]int{winningMove}}
 				move := aiHard.PickMove(board)
 				Expect(move).To(Equal(winningMove))
 			})
@@ -37,14 +37,23 @@ var _ = Describe("AiHard", func() {
 				Expect(move).To(Equal(winningMove))
 			})
 
-			XIt("if winning move isn't first available", func() {
+			It("if winning move isn't first available", func() {
 				winningMove := []int{0, 0}
-				board := mockBoard{winRow: 0, winCol: 0, turn: "X", availableMoves: [][]int{{3, 3}, winningMove}}
+				board := mockBoard{turn: "X", availableMoves: [][]int{{3, 3}, winningMove}}
 				move := aiHard.PickMove(board)
 				Expect(move).To(Equal(winningMove))
 			})
-
 		})
+
+		Context("picks a block if win isn't available", func() {
+			It("if block is first available move", func() {
+				blockMove := []int{0, 0}
+				board := mockBoard{winRow: 1, winCol: 1, turn: "X", availableMoves: [][]int{blockMove}}
+				move := aiHard.PickMove(board)
+				Expect(move).To(Equal(blockMove))
+			})
+		})
+
 	})
 
 })

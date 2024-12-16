@@ -17,6 +17,11 @@ func NewAiHard(name string) *AiHard {
 func (a AiHard) PickMove(board interfaces.Board) []int {
 	availableMoves := board.GetAvailableMoves()
 
+	for _, move := range availableMoves {
+		if board.WouldWin(move) {
+			return move
+		}
+	}
 	return availableMoves[0]
 }
 
