@@ -6,10 +6,10 @@ import (
 	"strings"
 )
 
-type cliRenderer struct{}
+type CliRenderer struct{}
 
-func newCliRenderer() *cliRenderer {
-	return &cliRenderer{}
+func NewCliRenderer() *CliRenderer {
+	return &CliRenderer{}
 }
 
 func addCellNumbers(cells [][]string) {
@@ -40,11 +40,11 @@ func cellsToString(cells [][]string, boardSize string) string {
 	}
 }
 
-func (r cliRenderer) Render(cells [][]string, boardSize string) {
+func (r CliRenderer) Render(cells [][]string, boardSize string) {
 	cellString := cellsToString(cells, boardSize)
 	fmt.Println(cellString)
 }
 
-func (r cliRenderer) RenderMessage(message string) {
+func (r CliRenderer) RenderMessage(message string) {
 	fmt.Println(message)
 }

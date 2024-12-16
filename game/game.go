@@ -1,24 +1,23 @@
 package game
 
 import (
-	"TicTacGo/board"
-	"TicTacGo/player"
-	"TicTacGo/renderer"
+	"TicTacGo/core"
+	"TicTacGo/factory"
 )
 
 type Game struct {
-	board    board.Board
-	playerX  player.Player
-	playerO  player.Player
-	renderer renderer.Renderer
+	board    core.Board
+	playerX  core.Player
+	playerO  core.Player
+	renderer core.Renderer
 	state    string
 }
 
 func NewGame(boardType, playerTypeX, playerXName, playerTypeO, playerOName, renderType string) (*Game, error) {
-	_board, boardErr := board.NewBoard(boardType)
-	playerX, xErr := player.NewPlayer(playerTypeX, playerXName)
-	playerO, oErr := player.NewPlayer(playerTypeO, playerOName)
-	_renderer, renderErr := renderer.NewRenderer(renderType)
+	_board, boardErr := factory.NewBoard(boardType)
+	playerX, xErr := factory.NewPlayer(playerTypeX, playerXName)
+	playerO, oErr := factory.NewPlayer(playerTypeO, playerOName)
+	_renderer, renderErr := factory.NewRenderer(renderType)
 
 	errs := []error{boardErr, xErr, oErr, renderErr}
 	for _, err := range errs {

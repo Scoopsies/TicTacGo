@@ -60,7 +60,7 @@ var _ = Describe("CliRenderer", func() {
 
 	Context("Render", func() {
 		It("prints an empty board", func() {
-			renderer := newCliRenderer()
+			renderer := NewCliRenderer()
 			output := captureOutput(func() {
 				renderer.Render(cells, boardSize)
 			})
@@ -72,7 +72,7 @@ var _ = Describe("CliRenderer", func() {
 
 	Context("RenderMessage", func() {
 		It("prints a message", func() {
-			renderer := newCliRenderer()
+			renderer := NewCliRenderer()
 			output := captureOutput(func() {
 				renderer.RenderMessage("This is a message")
 			})

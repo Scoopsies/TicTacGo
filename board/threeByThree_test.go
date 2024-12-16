@@ -11,10 +11,10 @@ var _ = Describe("ThreeByThree", func() {
 })
 
 func threeByThreeTests() {
-	var board Board
+	var board core.Board
 
 	BeforeEach(func() {
-		board, _ = NewBoard("3x3")
+		board = NewThreeByThree()
 	})
 
 	Context("Create Board", func() {

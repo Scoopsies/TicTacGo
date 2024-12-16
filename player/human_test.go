@@ -5,10 +5,29 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+type mockBoard struct {
+	size string
+}
+
+func (m mockBoard) AddMove(_, _ int) error {
+	return nil
+}
+
+func (m mockBoard) GetCells() [][]string {
+	return make([][]string, 0)
+}
+
+func (m mockBoard) GetType() string {
+	return m.size
+}
+
+func (m mockBoard) GetState() string {
+	return ""
+}
+
 func testPickMove(input string, row, column int) {
-	emptyCells := [][]string{{""}}
-	player, _ := NewPlayer("human", "Scoops")
-	r, c := player.PickMove(emptyCells, "3x3", input)
+	player := NewHumanPlayer("Scoops")
+	r, c := player.PickMove(mockBoard{"3x3"}, input)
 	Expect(r).To(Equal(row))
 	Expect(c).To(Equal(column))
 }
@@ -17,9 +36,8 @@ var _ = Describe("Human", func() {
 	Context("PickMove", func() {
 		Context("invalid board size", func() {
 			It("returns -1 -1 if invalid board size", func() {
-				emptyCells := [][]string{{""}}
-				player, _ := NewPlayer("human", "Scoops")
-				r, c := player.PickMove(emptyCells, "invalid board", "1")
+				player := NewHumanPlayer("Scoops")
+				r, c := player.PickMove(mockBoard{"invalid type"}, "1")
 				Expect(r).To(Equal(-1))
 				Expect(c).To(Equal(-1))
 			})
@@ -71,8 +89,8 @@ var _ = Describe("Human", func() {
 
 	Context("GetName", func() {
 		It("returns the name of the player", func() {
-			player1, _ := NewPlayer("human", "Scoops")
-			player2, _ := NewPlayer("human", "Alex")
+			player1 := NewHumanPlayer("Scoops")
+			player2 := NewHumanPlayer("Alex")
 			Expect(player1.GetName()).To(Equal("Scoops"))
 			Expect(player2.GetName()).To(Equal("Alex"))
 		})

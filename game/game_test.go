@@ -1,9 +1,7 @@
 package game
 
 import (
-	"TicTacGo/board"
-	"TicTacGo/player"
-	"TicTacGo/renderer"
+	"TicTacGo/factory"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -14,10 +12,10 @@ var _ = Describe("Game", func() {
 		Context("creates a game that", func() {
 
 			game, err := NewGame("3x3", "human", "X", "human", "O", "cli")
-			playerX, _ := player.NewPlayer("human", "X")
-			playerO, _ := player.NewPlayer("human", "O")
-			board, _ := board.NewBoard("3x3")
-			_renderer, _ := renderer.NewRenderer("cli")
+			playerX, _ := factory.NewPlayer("human", "X")
+			playerO, _ := factory.NewPlayer("human", "O")
+			board, _ := factory.NewBoard("3x3")
+			_renderer, _ := factory.NewRenderer("cli")
 
 			It("has a playerX", func() {
 				Expect(game.playerX).To(Equal(playerX))
