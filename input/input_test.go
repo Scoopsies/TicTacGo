@@ -15,7 +15,7 @@ var _ = Describe("input", func() {
 		)
 
 		BeforeEach(func() {
-			input = &CliInput{}
+			input = NewCliInput()
 			originalStdin = os.Stdin
 		})
 

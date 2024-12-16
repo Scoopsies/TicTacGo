@@ -45,6 +45,10 @@ func PlayGameTest(playerToken string) {
 
 	})
 
+	It("should not render an error message if invalid move", func() {
+		Expect(renderer.Messages).To(Not(ContainElement("invalid move")))
+	})
+
 	It("should render the game board", func() {
 		Expect(renderer.Called).To(ContainElement("Render"))
 	})

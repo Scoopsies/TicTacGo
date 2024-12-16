@@ -47,7 +47,7 @@ var _ = Describe("Game", func() {
 				g        *sut.Game
 			)
 			BeforeEach(func() {
-				board = &MockBoard{State: "draw", Turn: "X", Called: []string{}}
+				board = &MockBoard{State: "draw", Turn: "X", Called: []string{}, errorMove: true}
 				playerX = &MockPlayer{
 					name:      "Player X",
 					called:    []string{},
@@ -60,6 +60,11 @@ var _ = Describe("Game", func() {
 				renderer = &MockRenderer{}
 				g = sut.NewGame(board, playerX, playerO, renderer)
 				sut.PlayGame(g)
+			})
+
+			It("renders an error message if invalid move", func() {
+				Expect(renderer.Called).To(ContainElement("RenderMessage"))
+				Expect(renderer.Messages).To(ContainElement("invalid move"))
 			})
 
 			It("Announces the game was a draw.", func() {
