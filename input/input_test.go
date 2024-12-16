@@ -7,26 +7,15 @@ import (
 )
 
 var _ = Describe("input", func() {
-	Context("NewInput", func() {
-		It("throws an error if unknown render type", func() {
-			_, err := NewInput("bad render type")
-			Expect(err.Error()).To(ContainSubstring("invalid render type: bad render type"))
-		})
 
-		It("returns a cliInput", func() {
-			input, _ := NewInput("cli")
-			Expect(input).To(Equal(&cliInput{}))
-		})
-	})
-
-	Context("cliInput", func() {
+	Context("CliInput", func() {
 		var (
-			input         *cliInput
+			input         *CliInput
 			originalStdin *os.File
 		)
 
 		BeforeEach(func() {
-			input = &cliInput{}
+			input = &CliInput{}
 			originalStdin = os.Stdin
 		})
 

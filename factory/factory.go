@@ -2,6 +2,7 @@ package factory
 
 import (
 	"TicTacGo/board"
+	"TicTacGo/input"
 	"TicTacGo/interfaces"
 	"TicTacGo/player"
 	"TicTacGo/renderer"
@@ -33,4 +34,12 @@ func NewRenderer(renderType string) (interfaces.Renderer, error) {
 	default:
 		return nil, fmt.Errorf("unsupported render type: %s", renderType)
 	}
+}
+
+func NewInput(renderType string) (interfaces.Input, error) {
+	switch renderType {
+	case "cli":
+		return &input.CliInput{}, nil
+	}
+	return nil, fmt.Errorf("invalid render type: %s", renderType)
 }
