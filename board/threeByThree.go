@@ -60,7 +60,17 @@ func (b *ThreeByThree) GetState() string {
 }
 
 func (b *ThreeByThree) GetAvailableMoves() [][]int {
-	return nil
+	var result [][]int
+
+	for rowIdx, row := range b.cells {
+		for colIdx, col := range row {
+			if col == "" {
+				result = append(result, []int{rowIdx, colIdx})
+			}
+		}
+	}
+
+	return result
 }
 
 func GetCurrentToken(cells [][]string) string {

@@ -96,15 +96,7 @@ func threeByThreeTests() {
 		})
 
 		It("returns draw if no wins and no moves left", func() {
-			board.AddMove([]int{0, 0})
-			board.AddMove([]int{0, 2})
-			board.AddMove([]int{0, 1})
-			board.AddMove([]int{1, 0})
-			board.AddMove([]int{1, 1})
-			board.AddMove([]int{2, 1})
-			board.AddMove([]int{1, 2})
-			board.AddMove([]int{2, 2})
-			board.AddMove([]int{2, 0})
+			makeDraw(board)
 			cells := board.GetCells()
 			Expect(HasWin(cells, "X")).To(BeFalse())
 			Expect(HasWin(cells, "O")).To(BeFalse())
@@ -134,8 +126,27 @@ func threeByThreeTests() {
 		})
 	})
 
+	Context("getAvailableMoves", func() {
+		It("returns empty []int if no moves available", func() {
+			makeDraw(board)
+			Expect(board.GetAvailableMoves()).To(BeNil())
+		})
+
+		It("returns all positions on empty board", func() {
+			allMoves := [][]int{{0, 0}, {0, 1}, {0, 2}, {1, 0}, {1, 1}, {1, 2}, {2, 0}, {2, 1}, {2, 2}}
+			Expect(board.GetAvailableMoves()).To(Equal(allMoves))
+		})
+
+		It("returns all positions on a partially filled board", func() {
+			allMoves := [][]int{{0, 1}, {0, 2}, {1, 0}, {1, 1}, {1, 2}, {2, 0}, {2, 1}, {2, 2}}
+			board.AddMove([]int{0, 0})
+			Expect(board.GetAvailableMoves()).To(Equal(allMoves))
+		})
+	})
+
 	Context("WouldWin()", func() {
 		It("returns false if sent invalid position", func() {
+			makeDraw(board)
 			Expect(board.WouldWin([]int{-1, -1})).To(BeFalse())
 		})
 
@@ -157,4 +168,16 @@ func threeByThreeTests() {
 		})
 
 	})
+}
+
+func makeDraw(board interfaces.Board) {
+	board.AddMove([]int{0, 0})
+	board.AddMove([]int{0, 2})
+	board.AddMove([]int{0, 1})
+	board.AddMove([]int{1, 0})
+	board.AddMove([]int{1, 1})
+	board.AddMove([]int{2, 1})
+	board.AddMove([]int{1, 2})
+	board.AddMove([]int{2, 2})
+	board.AddMove([]int{2, 0})
 }
