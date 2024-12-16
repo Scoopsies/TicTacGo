@@ -1,39 +1,12 @@
-package renderer
+package renderer_test
 
 import (
+	sut "TicTacGo/renderer"
 	"bytes"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"os"
 )
-
-type mockBoard struct {
-	cells [][]string
-	size  string
-}
-
-func (m mockBoard) GetTurn() string {
-	return ""
-}
-
-func (m mockBoard) AddMove(_ []int) error {
-	return nil
-}
-
-func (m mockBoard) GetCells() [][]string {
-	return m.cells
-}
-
-func (m mockBoard) GetType() string {
-	return m.size
-}
-
-func (m mockBoard) GetState() string {
-	return ""
-}
-
-func (m mockBoard) GetAvailableMoves() {
-}
 
 func captureOutput(f func()) string {
 	reader, writer, err := os.Pipe()
@@ -67,7 +40,7 @@ var _ = Describe("CliRenderer", func() {
 	Context("cellsToString", func() {
 		It("returns empty string if invalid board size", func() {
 			board := mockBoard{size: "invalid board size"}
-			Expect("").To(Equal(cellsToString(board)))
+			Expect("").To(Equal(sut.CellsToString(board)))
 		})
 
 		It("converts empty board cells to string", func() {
@@ -75,7 +48,7 @@ var _ = Describe("CliRenderer", func() {
 				" 4 | 5 | 6 \n" +
 				" 7 | 8 | 9 "
 			board := mockBoard{cells: cells, size: "3x3"}
-			Expect(expected).To(Equal(cellsToString(board)))
+			Expect(expected).To(Equal(sut.CellsToString(board)))
 		})
 
 		It("Converts a board that's been played on to string", func() {
@@ -84,13 +57,13 @@ var _ = Describe("CliRenderer", func() {
 				" 7 | 8 | 9 "
 			cells[0][0] = "X"
 			board := mockBoard{cells: cells, size: "3x3"}
-			Expect(expected).To(Equal(cellsToString(board)))
+			Expect(expected).To(Equal(sut.CellsToString(board)))
 		})
 	})
 
 	Context("Render", func() {
 		It("prints an empty board", func() {
-			renderer := NewCliRenderer()
+			renderer := sut.NewCliRenderer()
 			board := mockBoard{
 				cells: cells,
 				size:  "3x3",
@@ -100,14 +73,14 @@ var _ = Describe("CliRenderer", func() {
 				renderer.Render(board)
 			})
 
-			expected := cellsToString(board) + "\n"
+			expected := sut.CellsToString(board) + "\n"
 			Expect(output).To(Equal(expected))
 		})
 	})
 
 	Context("RenderMessage", func() {
 		It("prints a message", func() {
-			renderer := NewCliRenderer()
+			renderer := sut.NewCliRenderer()
 			output := captureOutput(func() {
 				renderer.RenderMessage("This is a message")
 			})

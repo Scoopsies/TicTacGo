@@ -30,7 +30,8 @@ func (m *MockBoard) GetType() string {
 	return ""
 }
 
-func (m *MockBoard) GetAvailableMoves() {
+func (m *MockBoard) GetAvailableMoves() [][]int {
+	return nil
 }
 
 func (m *MockBoard) GetState() string {

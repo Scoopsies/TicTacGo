@@ -51,7 +51,7 @@ var _ = Describe("Board", func() {
 		})
 
 		It("returns an AiHard player", func() {
-			aiHard, _ := sut.NewPlayer("aiHard", "Cody Ai", input)
+			aiHard, _ := sut.NewPlayer("aiHard", "Cody Ai", nil)
 			expectedPlayer := player.NewAiHard("Cody Ai")
 			Expect(expectedPlayer).To(Equal(aiHard))
 		})

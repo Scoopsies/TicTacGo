@@ -33,7 +33,7 @@ func cellsToString3x3(board interfaces.Board) string {
 	return fmt.Sprintf(" %s \n %s \n %s ", row1, row2, row3)
 }
 
-func cellsToString(board interfaces.Board) string {
+func CellsToString(board interfaces.Board) string {
 	switch board.GetType() {
 	case "3x3":
 		return cellsToString3x3(board)
@@ -43,7 +43,7 @@ func cellsToString(board interfaces.Board) string {
 }
 
 func (r CliRenderer) Render(board interfaces.Board) {
-	cellString := cellsToString(board)
+	cellString := CellsToString(board)
 	fmt.Println(cellString)
 }
 

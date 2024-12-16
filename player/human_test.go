@@ -1,37 +1,11 @@
-package player
+package player_test
 
 import (
 	"TicTacGo/interfaces"
+	sut "TicTacGo/player"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
-
-type mockBoard struct {
-	size string
-}
-
-func (m mockBoard) GetTurn() string {
-	return ""
-}
-
-func (m mockBoard) GetAvailableMoves() {
-}
-
-func (m mockBoard) AddMove(_ []int) error {
-	return nil
-}
-
-func (m mockBoard) GetCells() [][]string {
-	return make([][]string, 0)
-}
-
-func (m mockBoard) GetType() string {
-	return m.size
-}
-
-func (m mockBoard) GetState() string {
-	return ""
-}
 
 type mockInput struct {
 	input string
@@ -42,7 +16,7 @@ func (m mockInput) GetInput() string {
 }
 
 func testPickMove(input interfaces.Input, row, column int) {
-	player := NewHuman("Scoops", input)
+	player := sut.NewHuman("Scoops", input)
 	move := player.PickMove(mockBoard{"3x3"})
 	Expect(move).To(Equal([]int{row, column}))
 }
@@ -51,7 +25,7 @@ var _ = Describe("Human", func() {
 	Context("PickMove", func() {
 		Context("invalid board size", func() {
 			It("returns -1 -1 if invalid board size", func() {
-				player := NewHuman("Scoops", mockInput{"1"})
+				player := sut.NewHuman("Scoops", mockInput{"1"})
 				move := player.PickMove(mockBoard{"invalid type"})
 				Expect(move).To(Equal([]int{-1, -1}))
 			})
@@ -106,8 +80,8 @@ var _ = Describe("Human", func() {
 
 	Context("GetName", func() {
 		It("returns the name of the player", func() {
-			player1 := NewHuman("Scoops", mockInput{})
-			player2 := NewHuman("Alex", mockInput{})
+			player1 := sut.NewHuman("Scoops", mockInput{})
+			player2 := sut.NewHuman("Alex", mockInput{})
 			Expect(player1.GetName()).To(Equal("Scoops"))
 			Expect(player2.GetName()).To(Equal("Alex"))
 		})

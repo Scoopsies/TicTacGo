@@ -5,6 +5,6 @@ type Board interface {
 	GetCells() [][]string
 	GetType() string
 	GetState() string
-	GetAvailableMoves()
+	GetAvailableMoves() [][]int
 	GetTurn() string
 }

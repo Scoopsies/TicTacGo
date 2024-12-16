@@ -47,8 +47,8 @@ func (b *ThreeByThree) GetState() string {
 	}
 }
 
-func (b *ThreeByThree) GetAvailableMoves() {
-
+func (b *ThreeByThree) GetAvailableMoves() [][]int {
+	return nil
 }
 
 func GetCurrentToken(cells [][]string) string {
