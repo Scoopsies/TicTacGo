@@ -93,3 +93,7 @@ func (b *ThreeByThree) GetState() string {
 		return "inProgress"
 	}
 }
+
+func (b *ThreeByThree) GetAvailableMoves() {
+
+}

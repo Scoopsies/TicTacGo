@@ -31,7 +31,7 @@ func threeByThreeTests() {
 		})
 	})
 
-	Context("Make Move", func() {
+	Context("AddMove", func() {
 		It("returns an error if out of bounds", func() {
 			err := board.AddMove(20, 20)
 			Expect(err.Error()).To(ContainSubstring("out of bounds"))

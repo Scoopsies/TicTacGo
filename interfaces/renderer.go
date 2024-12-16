@@ -1,6 +1,6 @@
 package interfaces
 
 type Renderer interface {
-	Render(cells [][]string, boardSize string)
+	Render(board Board)
 	RenderMessage(message string)
 }

@@ -14,10 +14,10 @@ type Game struct {
 }
 
 func NewGame(boardType, playerTypeX, playerXName, playerTypeO, playerOName, renderType string) (*Game, error) {
-	_board, boardErr := factory.NewBoard(boardType)
+	board, boardErr := factory.NewBoard(boardType)
 	playerX, xErr := factory.NewPlayer(playerTypeX, playerXName)
 	playerO, oErr := factory.NewPlayer(playerTypeO, playerOName)
-	_renderer, renderErr := factory.NewRenderer(renderType)
+	renderer, renderErr := factory.NewRenderer(renderType)
 
 	errs := []error{boardErr, xErr, oErr, renderErr}
 	for _, err := range errs {
@@ -27,10 +27,10 @@ func NewGame(boardType, playerTypeX, playerXName, playerTypeO, playerOName, rend
 	}
 
 	return &Game{
-		board:    _board,
+		board:    board,
 		playerX:  playerX,
 		playerO:  playerO,
-		renderer: _renderer,
+		renderer: renderer,
 		state:    "inProgress",
 	}, nil
 }

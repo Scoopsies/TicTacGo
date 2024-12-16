@@ -7,6 +7,30 @@ import (
 	"os"
 )
 
+type mockBoard struct {
+	cells [][]string
+	size  string
+}
+
+func (m mockBoard) AddMove(row, column int) error {
+	return nil
+}
+
+func (m mockBoard) GetCells() [][]string {
+	return m.cells
+}
+
+func (m mockBoard) GetType() string {
+	return m.size
+}
+
+func (m mockBoard) GetState() string {
+	return ""
+}
+
+func (m mockBoard) GetAvailableMoves() {
+}
+
 func captureOutput(f func()) string {
 	reader, writer, err := os.Pipe()
 	Expect(err).To(BeNil())
@@ -26,7 +50,6 @@ func captureOutput(f func()) string {
 }
 
 var _ = Describe("CliRenderer", func() {
-	boardSize := "3x3"
 	var cells [][]string
 
 	BeforeEach(func() {
@@ -39,14 +62,16 @@ var _ = Describe("CliRenderer", func() {
 
 	Context("cellsToString", func() {
 		It("returns empty string if invalid board size", func() {
-			Expect("").To(Equal(cellsToString(cells, "invalid size")))
+			board := mockBoard{size: "invalid board size"}
+			Expect("").To(Equal(cellsToString(board)))
 		})
 
 		It("converts empty board cells to string", func() {
 			expected := " 1 | 2 | 3 \n" +
 				" 4 | 5 | 6 \n" +
 				" 7 | 8 | 9 "
-			Expect(expected).To(Equal(cellsToString(cells, boardSize)))
+			board := mockBoard{cells: cells, size: "3x3"}
+			Expect(expected).To(Equal(cellsToString(board)))
 		})
 
 		It("Converts a board that's been played on to string", func() {
@@ -54,18 +79,24 @@ var _ = Describe("CliRenderer", func() {
 				" 4 | 5 | 6 \n" +
 				" 7 | 8 | 9 "
 			cells[0][0] = "X"
-			Expect(expected).To(Equal(cellsToString(cells, boardSize)))
+			board := mockBoard{cells: cells, size: "3x3"}
+			Expect(expected).To(Equal(cellsToString(board)))
 		})
 	})
 
 	Context("Render", func() {
 		It("prints an empty board", func() {
 			renderer := NewCliRenderer()
+			board := mockBoard{
+				cells: cells,
+				size:  "3x3",
+			}
+
 			output := captureOutput(func() {
-				renderer.Render(cells, boardSize)
+				renderer.Render(board)
 			})
 
-			expected := cellsToString(cells, boardSize) + "\n"
+			expected := cellsToString(board) + "\n"
 			Expect(output).To(Equal(expected))
 		})
 	})

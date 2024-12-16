@@ -9,6 +9,9 @@ type mockBoard struct {
 	size string
 }
 
+func (m mockBoard) GetAvailableMoves() {
+}
+
 func (m mockBoard) AddMove(_, _ int) error {
 	return nil
 }
