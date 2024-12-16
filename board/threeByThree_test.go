@@ -33,30 +33,30 @@ func threeByThreeTests() {
 
 	Context("AddMove", func() {
 		It("returns an error if out of bounds", func() {
-			err := board.AddMove(20, 20)
+			err := board.AddMove([]int{20, 20})
 			Expect(err.Error()).To(ContainSubstring("out of bounds"))
 		})
 
 		It("returns an error if below bounds", func() {
-			err := board.AddMove(-1, -1)
+			err := board.AddMove([]int{-1, -1})
 			Expect(err.Error()).To(ContainSubstring("out of bounds"))
 		})
 
 		It("returns an error if space already occupied", func() {
-			board.AddMove(0, 0)
-			err := board.AddMove(0, 0)
+			board.AddMove([]int{0, 0})
+			err := board.AddMove([]int{0, 0})
 			Expect(err.Error()).To(ContainSubstring("cell already occupied"))
 		})
 
 		It("plays X on [0][0] for first turn", func() {
-			board.AddMove(0, 0)
+			board.AddMove([]int{0, 0})
 			cell00 := board.GetCells()[0][0]
 			Expect(cell00).To(Equal("X"))
 		})
 
 		It("plays O on second turn", func() {
-			board.AddMove(0, 0)
-			board.AddMove(1, 1)
+			board.AddMove([]int{0, 0})
+			board.AddMove([]int{1, 1})
 			cell11 := board.GetCells()[1][1]
 			Expect(cell11).To(Equal("O"))
 		})
@@ -74,21 +74,21 @@ func threeByThreeTests() {
 		})
 
 		It("returns winX if x wins", func() {
-			board.AddMove(0, 0)
-			board.AddMove(1, 0)
-			board.AddMove(0, 1)
-			board.AddMove(1, 1)
-			board.AddMove(0, 2)
+			board.AddMove([]int{0, 0})
+			board.AddMove([]int{1, 0})
+			board.AddMove([]int{0, 1})
+			board.AddMove([]int{1, 1})
+			board.AddMove([]int{0, 2})
 			Expect(board.GetState()).To(Equal("X"))
 		})
 
 		It("returns winO if o wins", func() {
-			board.AddMove(1, 0)
-			board.AddMove(0, 0)
-			board.AddMove(1, 1)
-			board.AddMove(0, 1)
-			board.AddMove(2, 2)
-			board.AddMove(0, 2)
+			board.AddMove([]int{1, 0})
+			board.AddMove([]int{0, 0})
+			board.AddMove([]int{1, 1})
+			board.AddMove([]int{0, 1})
+			board.AddMove([]int{2, 2})
+			board.AddMove([]int{0, 2})
 			cells := board.GetCells()
 			Expect(HasWin(cells, "X")).To(BeFalse())
 			Expect(HasWin(cells, "O")).To(BeTrue())
@@ -96,15 +96,15 @@ func threeByThreeTests() {
 		})
 
 		It("returns draw if no wins and no moves left", func() {
-			board.AddMove(0, 0)
-			board.AddMove(0, 2)
-			board.AddMove(0, 1)
-			board.AddMove(1, 0)
-			board.AddMove(1, 1)
-			board.AddMove(2, 1)
-			board.AddMove(1, 2)
-			board.AddMove(2, 2)
-			board.AddMove(2, 0)
+			board.AddMove([]int{0, 0})
+			board.AddMove([]int{0, 2})
+			board.AddMove([]int{0, 1})
+			board.AddMove([]int{1, 0})
+			board.AddMove([]int{1, 1})
+			board.AddMove([]int{2, 1})
+			board.AddMove([]int{1, 2})
+			board.AddMove([]int{2, 2})
+			board.AddMove([]int{2, 0})
 			cells := board.GetCells()
 			Expect(HasWin(cells, "X")).To(BeFalse())
 			Expect(HasWin(cells, "O")).To(BeFalse())
@@ -118,18 +118,18 @@ func threeByThreeTests() {
 		})
 
 		It("returns O on a board with a lone X on [0][0]", func() {
-			board.AddMove(0, 0)
+			board.AddMove([]int{0, 0})
 			Expect(board.GetTurn()).To(Equal("O"))
 		})
 
 		It("returns 0 on a board with a lone X on [1][1]", func() {
-			board.AddMove(1, 1)
+			board.AddMove([]int{1, 1})
 			Expect(board.GetTurn()).To(Equal("O"))
 		})
 
 		It("returns X on a board with equal X's and O's", func() {
-			board.AddMove(1, 1)
-			board.AddMove(0, 0)
+			board.AddMove([]int{1, 1})
+			board.AddMove([]int{0, 0})
 			Expect(board.GetTurn()).To(Equal("X"))
 		})
 	})

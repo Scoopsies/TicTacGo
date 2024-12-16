@@ -17,7 +17,7 @@ func (m mockBoard) GetTurn() string {
 func (m mockBoard) GetAvailableMoves() {
 }
 
-func (m mockBoard) AddMove(_, _ int) error {
+func (m mockBoard) AddMove(_ []int) error {
 	return nil
 }
 
@@ -43,9 +43,8 @@ func (m mockInput) GetInput() string {
 
 func testPickMove(input interfaces.Input, row, column int) {
 	player := NewHumanPlayer("Scoops", input)
-	r, c := player.PickMove(mockBoard{"3x3"})
-	Expect(r).To(Equal(row))
-	Expect(c).To(Equal(column))
+	move := player.PickMove(mockBoard{"3x3"})
+	Expect(move).To(Equal([]int{row, column}))
 }
 
 var _ = Describe("Human", func() {
@@ -53,9 +52,8 @@ var _ = Describe("Human", func() {
 		Context("invalid board size", func() {
 			It("returns -1 -1 if invalid board size", func() {
 				player := NewHumanPlayer("Scoops", mockInput{"1"})
-				r, c := player.PickMove(mockBoard{"invalid type"})
-				Expect(r).To(Equal(-1))
-				Expect(c).To(Equal(-1))
+				move := player.PickMove(mockBoard{"invalid type"})
+				Expect(move).To(Equal([]int{-1, -1}))
 			})
 		})
 

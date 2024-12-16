@@ -16,7 +16,7 @@ func (m mockBoard) GetTurn() string {
 	return ""
 }
 
-func (m mockBoard) AddMove(row, column int) error {
+func (m mockBoard) AddMove(_ []int) error {
 	return nil
 }
 

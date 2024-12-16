@@ -1,8 +1,6 @@
 package board
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type ThreeByThree struct {
 	size  int
@@ -19,28 +17,6 @@ func NewThreeByThree() *ThreeByThree {
 func (b *ThreeByThree) GetCells() [][]string {
 
 	return CopyCells(b.cells)
-}
-
-func isNotInBounds(b *ThreeByThree, row, column int) bool {
-	isBelowBounds := row < 0 || column < 0
-	isAboveBounds := row >= b.size || column >= b.size
-	return isBelowBounds || isAboveBounds
-}
-
-func isOccupied(b *ThreeByThree, row, column int) bool {
-	return b.cells[row][column] != ""
-}
-
-func (b *ThreeByThree) AddMove(row, column int) error {
-	switch {
-	case isNotInBounds(b, row, column):
-		return fmt.Errorf("invalid move: out of bounds")
-	case isOccupied(b, row, column):
-		return fmt.Errorf("invalid move: cell already occupied")
-	default:
-		b.cells[row][column] = b.GetTurn()
-		return nil
-	}
 }
 
 func (b *ThreeByThree) GetType() string {
@@ -75,10 +51,6 @@ func (b *ThreeByThree) GetAvailableMoves() {
 
 }
 
-func (b *ThreeByThree) GetTurn() string {
-	return GetCurrentToken(b.cells)
-}
-
 func GetCurrentToken(cells [][]string) string {
 	xCount, oCount := countXO(cells)
 	if xCount > oCount {
@@ -100,4 +72,32 @@ func countXO(cells [][]string) (int, int) {
 		}
 	}
 	return xCount, oCount
+}
+
+func (b *ThreeByThree) GetTurn() string {
+	return GetCurrentToken(b.cells)
+}
+
+func isNotInBounds(b *ThreeByThree, row, column int) bool {
+	isBelowBounds := row < 0 || column < 0
+	isAboveBounds := row >= b.size || column >= b.size
+	return isBelowBounds || isAboveBounds
+}
+
+func isOccupied(b *ThreeByThree, row, column int) bool {
+	return b.cells[row][column] != ""
+}
+
+func (b *ThreeByThree) AddMove(position []int) error {
+	row := position[0]
+	column := position[1]
+	switch {
+	case isNotInBounds(b, row, column):
+		return fmt.Errorf("invalid move: out of bounds")
+	case isOccupied(b, row, column):
+		return fmt.Errorf("invalid move: cell already occupied")
+	default:
+		b.cells[row][column] = b.GetTurn()
+		return nil
+	}
 }
