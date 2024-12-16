@@ -2,13 +2,13 @@ package factory
 
 import (
 	"TicTacGo/board"
-	"TicTacGo/core"
+	"TicTacGo/interfaces"
 	"TicTacGo/player"
 	"TicTacGo/renderer"
 	"fmt"
 )
 
-func NewBoard(boardType string) (core.Board, error) {
+func NewBoard(boardType string) (interfaces.Board, error) {
 	switch boardType {
 	case "3x3":
 		return board.NewThreeByThree(), nil
@@ -17,7 +17,7 @@ func NewBoard(boardType string) (core.Board, error) {
 	}
 }
 
-func NewPlayer(playerType, name string) (core.Player, error) {
+func NewPlayer(playerType, name string) (interfaces.Player, error) {
 	switch playerType {
 	case "human":
 		return player.NewHumanPlayer(name), nil
@@ -26,7 +26,7 @@ func NewPlayer(playerType, name string) (core.Player, error) {
 	}
 }
 
-func NewRenderer(renderType string) (core.Renderer, error) {
+func NewRenderer(renderType string) (interfaces.Renderer, error) {
 	switch renderType {
 	case "cli":
 		return renderer.NewCliRenderer(), nil

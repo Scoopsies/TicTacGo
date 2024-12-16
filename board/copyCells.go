@@ -1,4 +1,4 @@
-package core
+package board
 
 func CopyCells(cells [][]string) [][]string {
 	newCells := make([][]string, len(cells))

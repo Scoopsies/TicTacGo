@@ -1,4 +1,4 @@
-package core
+package board
 
 func allMatch(row []string, token string) bool {
 	for _, cell := range row {

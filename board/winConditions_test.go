@@ -1,4 +1,4 @@
-package core
+package board
 
 import (
 	. "github.com/onsi/ginkgo/v2"

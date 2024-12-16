@@ -1,7 +1,7 @@
 package board
 
 import (
-	"TicTacGo/core"
+	"TicTacGo/interfaces"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -11,7 +11,7 @@ var _ = Describe("ThreeByThree", func() {
 })
 
 func threeByThreeTests() {
-	var board core.Board
+	var board interfaces.Board
 
 	BeforeEach(func() {
 		board = NewThreeByThree()
@@ -79,7 +79,7 @@ func threeByThreeTests() {
 			board.AddMove(0, 1)
 			board.AddMove(1, 1)
 			board.AddMove(0, 2)
-			Expect(board.GetState()).To(Equal("winX"))
+			Expect(board.GetState()).To(Equal("X"))
 		})
 
 		It("returns winO if o wins", func() {
@@ -90,9 +90,9 @@ func threeByThreeTests() {
 			board.AddMove(2, 2)
 			board.AddMove(0, 2)
 			cells := board.GetCells()
-			Expect(core.HasWin(cells, "X")).To(BeFalse())
-			Expect(core.HasWin(cells, "O")).To(BeTrue())
-			Expect(board.GetState()).To(Equal("winO"))
+			Expect(HasWin(cells, "X")).To(BeFalse())
+			Expect(HasWin(cells, "O")).To(BeTrue())
+			Expect(board.GetState()).To(Equal("O"))
 		})
 
 		It("returns draw if no wins and no moves left", func() {
@@ -106,8 +106,8 @@ func threeByThreeTests() {
 			board.AddMove(2, 2)
 			board.AddMove(2, 0)
 			cells := board.GetCells()
-			Expect(core.HasWin(cells, "X")).To(BeFalse())
-			Expect(core.HasWin(cells, "O")).To(BeFalse())
+			Expect(HasWin(cells, "X")).To(BeFalse())
+			Expect(HasWin(cells, "O")).To(BeFalse())
 			Expect(board.GetState()).To(Equal("draw"))
 		})
 	})

@@ -1,7 +1,6 @@
 package board
 
 import (
-	"TicTacGo/core"
 	"fmt"
 )
 
@@ -19,7 +18,7 @@ func NewThreeByThree() *ThreeByThree {
 
 func (b *ThreeByThree) GetCells() [][]string {
 
-	return core.CopyCells(b.cells)
+	return CopyCells(b.cells)
 }
 
 func isNotInBounds(b *ThreeByThree, row, column int) bool {
@@ -39,7 +38,7 @@ func (b *ThreeByThree) AddMove(row, column int) error {
 	case isOccupied(b, row, column):
 		return fmt.Errorf("invalid move: cell already occupied")
 	default:
-		b.cells[row][column] = core.GetCurrentToken(b.cells)
+		b.cells[row][column] = GetCurrentToken(b.cells)
 		return nil
 	}
 }
@@ -61,10 +60,10 @@ func hasNoValidMoves(cells [][]string) bool {
 
 func (b *ThreeByThree) GetState() string {
 	switch {
-	case core.HasWin(b.cells, "X"):
-		return "winX"
-	case core.HasWin(b.cells, "O"):
-		return "winO"
+	case HasWin(b.cells, "X"):
+		return "X"
+	case HasWin(b.cells, "O"):
+		return "O"
 	case hasNoValidMoves(b.cells):
 		return "draw"
 	default:

@@ -1,15 +1,15 @@
 package game
 
 import (
-	"TicTacGo/core"
 	"TicTacGo/factory"
+	"TicTacGo/interfaces"
 )
 
 type Game struct {
-	board    core.Board
-	playerX  core.Player
-	playerO  core.Player
-	renderer core.Renderer
+	board    interfaces.Board
+	playerX  interfaces.Player
+	playerO  interfaces.Player
+	renderer interfaces.Renderer
 	state    string
 }
 

@@ -1,6 +1,6 @@
 package player
 
-import "TicTacGo/core"
+import "TicTacGo/interfaces"
 
 type Human struct {
 	name string
@@ -25,7 +25,7 @@ var moveMap3x3 = map[string][2]int{
 	"7": {2, 0}, "8": {2, 1}, "9": {2, 2},
 }
 
-func (h Human) PickMove(board core.Board, input string) (int, int) {
+func (h Human) PickMove(board interfaces.Board, input string) (int, int) {
 	var moveMap map[string][2]int
 	switch board.GetType() {
 	case "3x3":

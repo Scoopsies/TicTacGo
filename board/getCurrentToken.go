@@ -1,4 +1,4 @@
-package core
+package board
 
 func countXO(cells [][]string) (int, int) {
 	xCount, oCount := 0, 0
