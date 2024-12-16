@@ -12,6 +12,10 @@ type mockBoard struct {
 	size  string
 }
 
+func (m mockBoard) GetTurn() string {
+	return ""
+}
+
 func (m mockBoard) AddMove(row, column int) error {
 	return nil
 }

@@ -112,38 +112,25 @@ func threeByThreeTests() {
 		})
 	})
 
-	Context("GetCurrentToken", func() {
-
-		var cells [][]string
-
-		BeforeEach(func() {
-			cells = [][]string{
-				{"", "", ""},
-				{"", "", ""},
-				{"", "", ""},
-			}
+	Context("GetTurn", func() {
+		It("returns X on an empty board", func() {
+			Expect(board.GetTurn()).To(Equal("X"))
 		})
 
-		Context("GetTurn", func() {
-			It("returns X on an empty board", func() {
-				Expect(GetCurrentToken(cells)).To(Equal("X"))
-			})
+		It("returns O on a board with a lone X on [0][0]", func() {
+			board.AddMove(0, 0)
+			Expect(board.GetTurn()).To(Equal("O"))
+		})
 
-			It("returns O on a board with a lone X on [0][0]", func() {
-				cells[0][0] = "X"
-				Expect(GetCurrentToken(cells)).To(Equal("O"))
-			})
+		It("returns 0 on a board with a lone X on [1][1]", func() {
+			board.AddMove(1, 1)
+			Expect(board.GetTurn()).To(Equal("O"))
+		})
 
-			It("returns 0 on a board with a lone X on [1][1]", func() {
-				cells[1][1] = "X"
-				Expect(GetCurrentToken(cells)).To(Equal("O"))
-			})
-
-			It("returns X on a board with equal X's and O's", func() {
-				cells[1][1] = "X"
-				cells[0][0] = "O"
-				Expect(GetCurrentToken(cells)).To(Equal("X"))
-			})
+		It("returns X on a board with equal X's and O's", func() {
+			board.AddMove(1, 1)
+			board.AddMove(0, 0)
+			Expect(board.GetTurn()).To(Equal("X"))
 		})
 	})
 }

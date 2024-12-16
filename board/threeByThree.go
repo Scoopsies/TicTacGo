@@ -31,29 +31,6 @@ func isOccupied(b *ThreeByThree, row, column int) bool {
 	return b.cells[row][column] != ""
 }
 
-func countXO(cells [][]string) (int, int) {
-	xCount, oCount := 0, 0
-	for _, row := range cells {
-		for _, cell := range row {
-			switch cell {
-			case "X":
-				xCount++
-			case "O":
-				oCount++
-			}
-		}
-	}
-	return xCount, oCount
-}
-
-func GetCurrentToken(cells [][]string) string {
-	xCount, oCount := countXO(cells)
-	if xCount > oCount {
-		return "O"
-	}
-	return "X"
-}
-
 func (b *ThreeByThree) AddMove(row, column int) error {
 	switch {
 	case isNotInBounds(b, row, column):
@@ -61,7 +38,7 @@ func (b *ThreeByThree) AddMove(row, column int) error {
 	case isOccupied(b, row, column):
 		return fmt.Errorf("invalid move: cell already occupied")
 	default:
-		b.cells[row][column] = GetCurrentToken(b.cells)
+		b.cells[row][column] = b.GetTurn()
 		return nil
 	}
 }
@@ -96,4 +73,31 @@ func (b *ThreeByThree) GetState() string {
 
 func (b *ThreeByThree) GetAvailableMoves() {
 
+}
+
+func (b *ThreeByThree) GetTurn() string {
+	return GetCurrentToken(b.cells)
+}
+
+func GetCurrentToken(cells [][]string) string {
+	xCount, oCount := countXO(cells)
+	if xCount > oCount {
+		return "O"
+	}
+	return "X"
+}
+
+func countXO(cells [][]string) (int, int) {
+	xCount, oCount := 0, 0
+	for _, row := range cells {
+		for _, cell := range row {
+			switch cell {
+			case "X":
+				xCount++
+			case "O":
+				oCount++
+			}
+		}
+	}
+	return xCount, oCount
 }

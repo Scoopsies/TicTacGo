@@ -9,6 +9,10 @@ type mockBoard struct {
 	size string
 }
 
+func (m mockBoard) GetTurn() string {
+	return ""
+}
+
 func (m mockBoard) GetAvailableMoves() {
 }
 

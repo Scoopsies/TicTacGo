@@ -6,4 +6,5 @@ type Board interface {
 	GetType() string
 	GetState() string
 	GetAvailableMoves()
+	GetTurn() string
 }
