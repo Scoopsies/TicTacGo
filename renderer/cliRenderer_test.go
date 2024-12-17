@@ -73,7 +73,7 @@ var _ = Describe("CliRenderer", func() {
 				renderer.Render(board)
 			})
 
-			expected := sut.CellsToString(board) + "\n"
+			expected := "\n" + sut.CellsToString(board) + "\n\n"
 			Expect(output).To(Equal(expected))
 		})
 	})
@@ -85,7 +85,16 @@ var _ = Describe("CliRenderer", func() {
 				renderer.RenderMessage("This is a message")
 			})
 
-			Expect(output).To(Equal("This is a message\n"))
+			Expect(output).To(Equal("This is a message\n\n"))
+		})
+
+		It("prints a different message", func() {
+			renderer := sut.NewCliRenderer()
+			output := captureOutput(func() {
+				renderer.RenderMessage("This is a different message")
+			})
+
+			Expect(output).To(Equal("This is a different message\n\n"))
 		})
 	})
 

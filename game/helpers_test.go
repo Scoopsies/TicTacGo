@@ -12,7 +12,7 @@ func PlayGameTest(playerToken string) {
 		playerX       *MockPlayer
 		playerO       *MockPlayer
 		renderer      *MockRenderer
-		g             *game.Game
+		g             game.Game
 		currentPlayer *MockPlayer
 	)
 	BeforeEach(func() {
@@ -34,8 +34,8 @@ func PlayGameTest(playerToken string) {
 			},
 		}
 		renderer = &MockRenderer{}
-		g = game.NewGame(board, playerX, playerO, renderer)
-		game.PlayGame(g)
+		g = game.NewGame(renderer, playerX, playerO, board)
+		g.Play()
 
 		playerMap := map[string]*MockPlayer{
 			"X": playerX,

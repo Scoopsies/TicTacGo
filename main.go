@@ -1,23 +1,28 @@
 package main
 
 import (
+	"TicTacGo/config"
 	"TicTacGo/factory"
-	"TicTacGo/game"
+	game "TicTacGo/game"
 )
 
-func main() {
-	board, boardErr := factory.NewBoard("3x3")
-	input, iErr := factory.NewInput("cli")
-	playerO, xErr := factory.NewPlayer("human", "Scoops", input)
-	playerX, oErr := factory.NewPlayer("aiHard", "Cody Ai", nil)
-	renderer, renderErr := factory.NewRenderer("cli")
-	errs := []error{iErr, boardErr, xErr, oErr, renderErr}
-	for _, err := range errs {
+func maybePanic(errors []error) {
+	for _, err := range errors {
 		if err != nil {
-			panic(err.Error())
+			panic(err)
 		}
 	}
-	thisGame := game.NewGame(board, playerX, playerO, renderer)
+}
 
-	game.PlayGame(thisGame)
+func main() {
+	renderer, rErr := factory.NewRenderer("cli")
+	input, iErr := factory.NewInput("cli")
+	playerX := config.ConfigPlayer(renderer, input, "X")
+	playerO := config.ConfigPlayer(renderer, input, "O")
+	board, bErr := factory.NewBoard("3x3")
+
+	maybePanic([]error{rErr, iErr, bErr})
+
+	ticTacToe := game.NewGame(renderer, playerX, playerO, board)
+	ticTacToe.Play()
 }

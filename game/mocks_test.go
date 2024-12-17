@@ -17,11 +17,11 @@ func (m *MockBoard) Copy() interfaces.Board {
 	return nil
 }
 
-func (m *MockBoard) WouldBlock(position []int) bool {
+func (m *MockBoard) WouldBlock(_ []int) bool {
 	return false
 }
 
-func (m *MockBoard) WouldWin(position []int) bool {
+func (m *MockBoard) WouldWin(_ []int) bool {
 	return true
 }
 

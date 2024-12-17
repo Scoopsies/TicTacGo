@@ -11,8 +11,8 @@ type Game struct {
 	Renderer interfaces.Renderer
 }
 
-func NewGame(board interfaces.Board, playerX, playerO interfaces.Player, renderer interfaces.Renderer) *Game {
-	return &Game{
+func NewGame(renderer interfaces.Renderer, playerX, playerO interfaces.Player, board interfaces.Board) Game {
+	return Game{
 		Board:    board,
 		PlayerX:  playerX,
 		PlayerO:  playerO,
@@ -65,11 +65,11 @@ func loopGameplay(gameState string, board interfaces.Board, playerX, playerO int
 	}
 }
 
-func PlayGame(game *Game) {
-	board := game.Board
-	playerX := game.PlayerX
-	playerO := game.PlayerO
-	renderer := game.Renderer
+func (g Game) Play() {
+	board := g.Board
+	playerX := g.PlayerX
+	playerO := g.PlayerO
+	renderer := g.Renderer
 	gameState := "inProgress"
 
 	loopGameplay(gameState, board, playerX, playerO, renderer)

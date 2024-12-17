@@ -15,7 +15,7 @@ var _ = Describe("Game", func() {
 			playerO, _ := factory.NewPlayer("human", "O", input)
 			board, _ := factory.NewBoard("3x3")
 			renderer, _ := factory.NewRenderer("cli")
-			game := sut.NewGame(board, playerX, playerO, renderer)
+			game := sut.NewGame(renderer, playerX, playerO, board)
 
 			It("has a playerX", func() {
 				Expect(game.PlayerX).To(Equal(playerX))
@@ -44,7 +44,7 @@ var _ = Describe("Game", func() {
 				playerX  *MockPlayer
 				playerO  *MockPlayer
 				renderer *MockRenderer
-				g        *sut.Game
+				g        sut.Game
 			)
 			BeforeEach(func() {
 				board = &MockBoard{State: "draw", Turn: "X", Called: []string{}, errorMove: true}
@@ -58,8 +58,8 @@ var _ = Describe("Game", func() {
 				}
 				playerO = &MockPlayer{}
 				renderer = &MockRenderer{}
-				g = sut.NewGame(board, playerX, playerO, renderer)
-				sut.PlayGame(g)
+				g = sut.NewGame(renderer, playerX, playerO, board)
+				g.Play()
 			})
 
 			It("renders an error message if invalid move", func() {
@@ -82,7 +82,7 @@ var _ = Describe("Game", func() {
 				playerX  *MockPlayer
 				playerO  *MockPlayer
 				renderer *MockRenderer
-				g        *sut.Game
+				g        sut.Game
 			)
 			BeforeEach(func() {
 				board = &MockBoard{State: "draw", Turn: "X", Called: []string{}}
@@ -96,8 +96,8 @@ var _ = Describe("Game", func() {
 				}
 				playerO = &MockPlayer{}
 				renderer = &MockRenderer{}
-				g = sut.NewGame(board, playerX, playerO, renderer)
-				sut.PlayGame(g)
+				g = sut.NewGame(renderer, playerX, playerO, board)
+				g.Play()
 			})
 
 			It("Announces the game was a draw.", func() {

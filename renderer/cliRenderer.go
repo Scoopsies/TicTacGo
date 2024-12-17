@@ -44,9 +44,11 @@ func CellsToString(board interfaces.Board) string {
 
 func (r CliRenderer) Render(board interfaces.Board) {
 	cellString := CellsToString(board)
+	fmt.Println("")
 	fmt.Println(cellString)
+	fmt.Println("")
 }
 
 func (r CliRenderer) RenderMessage(message string) {
-	fmt.Println(message)
+	fmt.Println(message + "\n")
 }
