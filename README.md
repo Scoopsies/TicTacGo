@@ -1,6 +1,21 @@
 # TicTacGo
 
+Start by verifying that you have go installed:
+```
+go version
+```
 
+Clone this repo:
+```
+git clone git@github.com:Scoopsies/TicTacGo.git
+```
+
+Run the program:
+```
+cd TicTacToeGo
+go run .
+```
+---
 ### Testing
 
 To run all tests once:
