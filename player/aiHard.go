@@ -43,8 +43,7 @@ func (a AiHard) PickMove(board interfaces.Board) []int {
 	case blockMove != nil:
 		return blockMove
 	default:
-		// Fallback to the first available move
-		return availableMoves[0]
+		return PickBestMove(board, availableMoves)
 	}
 }
 

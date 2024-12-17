@@ -8,8 +8,8 @@ import (
 func main() {
 	board, boardErr := factory.NewBoard("3x3")
 	input, iErr := factory.NewInput("cli")
-	playerX, xErr := factory.NewPlayer("human", "Scoops", input)
-	playerO, oErr := factory.NewPlayer("human", "Svea", input)
+	playerO, xErr := factory.NewPlayer("human", "Scoops", input)
+	playerX, oErr := factory.NewPlayer("aiHard", "Cody Ai", nil)
 	renderer, renderErr := factory.NewRenderer("cli")
 	errs := []error{iErr, boardErr, xErr, oErr, renderErr}
 	for _, err := range errs {

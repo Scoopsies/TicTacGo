@@ -13,6 +13,10 @@ type MockBoard struct {
 	errorMove bool
 }
 
+func (m *MockBoard) Copy() interfaces.Board {
+	return nil
+}
+
 func (m *MockBoard) WouldBlock(position []int) bool {
 	return false
 }

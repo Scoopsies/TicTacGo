@@ -186,6 +186,19 @@ func threeByThreeTests() {
 			Expect(board.WouldBlock([]int{0, 2})).To(BeTrue())
 		})
 	})
+
+	Context("Copy", func() {
+		It("returns an identical board", func() {
+			boardCopy := board.Copy()
+			Expect(board).To(Equal(boardCopy))
+		})
+
+		It("making changes to the copy doesn't make changes to the original", func() {
+			boardCopy := board.Copy()
+			boardCopy.AddMove([]int{0, 0})
+			Expect(board.GetAvailableMoves()).To(Not(Equal(boardCopy.GetAvailableMoves())))
+		})
+	})
 }
 
 func makeDraw(board interfaces.Board) {

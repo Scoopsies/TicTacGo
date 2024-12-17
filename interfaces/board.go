@@ -9,4 +9,5 @@ type Board interface {
 	GetTurn() string
 	WouldWin(position []int) bool
 	WouldBlock(position []int) bool
+	Copy() Board
 }

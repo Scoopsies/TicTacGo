@@ -10,6 +10,12 @@ type ThreeByThree struct {
 	cells [][]string
 }
 
+func (b *ThreeByThree) Copy() interfaces.Board {
+	cells := CopyCells(b.cells)
+	size := b.size
+	return &ThreeByThree{size: size, cells: cells}
+}
+
 func getOppToken(board interfaces.Board) string {
 	if board.GetTurn() == "X" {
 		return "O"

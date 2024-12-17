@@ -1,26 +1,37 @@
 package player_test
 
-import "fmt"
+import (
+	"TicTacGo/interfaces"
+)
 
 type mockBoard struct {
 	size           string
-	winRow         int
-	winCol         int
-	blockRow       int
-	blockCol       int
+	winPosition    []int
+	losePosition   []int
 	isWin          bool
 	availableMoves [][]int
 	turn           string
 }
 
+func (m mockBoard) Copy() interfaces.Board {
+	return mockBoard{
+		m.size, m.winPosition, m.losePosition,
+		m.isWin, m.availableMoves, m.turn,
+	}
+}
+
+func isEqual(position1, position2 []int) bool {
+	row, col := position1[0], position1[1]
+	lRow, lCol := position2[0], position2[1]
+	return row == lRow && col == lCol
+}
+
 func (m mockBoard) WouldBlock(position []int) bool {
-	row, col := position[0], position[1]
-	return row == m.blockRow && col == m.blockCol
+	return isEqual(position, m.losePosition)
 }
 
 func (m mockBoard) WouldWin(position []int) bool {
-	row, col := position[0], position[1]
-	return row == m.winRow && col == m.winCol
+	return isEqual(position, m.winPosition)
 }
 
 func (m mockBoard) GetTurn() string { return m.turn }
@@ -29,13 +40,8 @@ func (m mockBoard) GetAvailableMoves() [][]int {
 	return m.availableMoves
 }
 
-func (m mockBoard) AddMove(move []int) error {
-	if move[0] == m.winRow && move[1] == m.winCol {
-		m.isWin = true
-		fmt.Println("")
-		fmt.Print(move)
-		fmt.Println(" triggered a win")
-	}
+func (m mockBoard) AddMove(_ []int) error {
+	m.availableMoves = m.availableMoves[1:]
 	return nil
 }
 
@@ -49,7 +55,6 @@ func (m mockBoard) GetType() string {
 
 func (m mockBoard) GetState() string {
 	if m.isWin {
-		fmt.Println("dropped a token")
 		return m.turn
 	}
 	return "O"
