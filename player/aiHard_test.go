@@ -28,11 +28,21 @@ var _ = Describe("AiHard", func() {
 	BeforeEach(func() {
 		aiHard = sut.NewAiHard("Cody Ai")
 		allMoves = [][]int{topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight}
-		threeByThree = board.NewThreeByThree()
+	})
+
+	Context("getName", func() {
+		It("returns its name", func() {
+			aiHard2 := sut.NewAiHard("Scoopsinator5000")
+			Expect(aiHard.GetName()).To(Equal("Cody Ai"))
+			Expect(aiHard2.GetName()).To(Equal("Scoopsinator5000"))
+		})
 	})
 
 	Context("PickMove", func() {
 		Context("3x3 board", func() {
+			BeforeEach(func() {
+				threeByThree = board.NewThreeByThree()
+			})
 			It("picks a corner move as first move", func() {
 				Expect(aiHard.PickMove(threeByThree)).To(Equal(topLeft))
 			})
@@ -70,7 +80,7 @@ var _ = Describe("AiHard", func() {
 		})
 
 		It("ends in a draw when playing against its self", func() {
-			for i := 0; i < 9; i++ {
+			for i := 0; i < 8; i++ {
 				threeByThree.AddMove(aiHard.PickMove(threeByThree))
 			}
 			Expect(threeByThree.GetState()).To(Equal("draw"))

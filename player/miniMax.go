@@ -3,32 +3,42 @@ package player
 import "TicTacGo/interfaces"
 
 const (
-	MaxScore = 1000
-	MinScore = -1000
+	MaxScore  = 1000
+	MinScore  = -1000
+	WinScore  = 10
+	DrawScore = 0
 )
 
 func isEmpty(moves [][]int) bool {
 	return len(moves) == 0
 }
 
+func hasWinningMove(board interfaces.Board, moves [][]int) bool {
+	for _, move := range moves {
+		if board.WouldWin(move) {
+			return true
+		}
+	}
+	return false
+}
+
+func scoreWin(depth int, isMaximizing bool) int {
+	if isMaximizing {
+		return WinScore - depth
+	} else {
+		return depth - WinScore
+	}
+}
+
 func Minimax(board interfaces.Board, depth int, isMaximizing bool) int {
 	availableMoves := board.GetAvailableMoves()
 
-	for _, move := range availableMoves {
-		if board.WouldWin(move) {
-			if isMaximizing {
-				return 10 - depth
-			} else {
-				return depth - 10
-			}
-		}
-	}
-
-	if isEmpty(availableMoves) {
-		return 0
-	}
-
-	if isMaximizing {
+	switch {
+	case isEmpty(availableMoves):
+		return DrawScore
+	case hasWinningMove(board, availableMoves):
+		return scoreWin(depth, isMaximizing)
+	case isMaximizing:
 		bestScore := MinScore
 		for _, move := range availableMoves {
 			boardCopy := board.Copy()
@@ -37,7 +47,7 @@ func Minimax(board interfaces.Board, depth int, isMaximizing bool) int {
 			bestScore = max(bestScore, score)
 		}
 		return bestScore
-	} else {
+	default:
 		bestScore := MaxScore
 		for _, move := range availableMoves {
 			boardCopy := board.Copy()
@@ -56,9 +66,7 @@ func PickBestMove(board interfaces.Board, availableMoves [][]int) []int {
 	for _, move := range availableMoves {
 		boardCopy := board.Copy()
 		boardCopy.AddMove(move)
-
 		score := Minimax(boardCopy, 0, false)
-
 		if score > bestScore {
 			bestScore = score
 			bestMove = move
