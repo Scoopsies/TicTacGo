@@ -14,22 +14,38 @@ func NewAiHard(name string) *AiHard {
 	}
 }
 
-func (a AiHard) PickMove(board interfaces.Board) []int {
-	availableMoves := board.GetAvailableMoves()
-
+func maybeGetWin(board interfaces.Board, availableMoves [][]int) []int {
 	for _, move := range availableMoves {
 		if board.WouldWin(move) {
 			return move
 		}
 	}
+	return nil
+}
 
+func maybeGetBlock(board interfaces.Board, availableMoves [][]int) []int {
 	for _, move := range availableMoves {
 		if board.WouldBlock(move) {
 			return move
 		}
 	}
+	return nil
+}
 
-	return availableMoves[0]
+func (a AiHard) PickMove(board interfaces.Board) []int {
+	availableMoves := board.GetAvailableMoves()
+	winMove := maybeGetWin(board, availableMoves)
+	blockMove := maybeGetBlock(board, availableMoves)
+
+	switch {
+	case winMove != nil:
+		return winMove
+	case blockMove != nil:
+		return blockMove
+	default:
+		// Fallback to the first available move
+		return availableMoves[0]
+	}
 }
 
 func (a AiHard) GetName() string {
