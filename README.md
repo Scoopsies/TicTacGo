@@ -5,6 +5,8 @@ Start by verifying that you have go installed:
 go version
 ```
 
+If not it can be installed [here](https://go.dev/doc/install).
+
 Clone this repo:
 ```
 git clone git@github.com:Scoopsies/TicTacGo.git
