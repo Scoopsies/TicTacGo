@@ -152,10 +152,7 @@ func threeByThreeTests() {
 
 		It("returns false if position is already occupied", func() {
 			position := []int{0, 1}
-			board.AddMove([]int{0, 0})
 			board.AddMove(position)
-			board.AddMove([]int{0, 2})
-			board.AddMove([]int{1, 1})
 			Expect(board.WouldWin(position)).To(BeFalse())
 		})
 
@@ -168,16 +165,35 @@ func threeByThreeTests() {
 		})
 
 	})
+
+	Context("WouldBlock", func() {
+		It("returns false if out of bounds", func() {
+			Expect(board.WouldBlock([]int{-1, -1})).To(BeFalse())
+		})
+
+		It("returns false if position is already occupied", func() {
+			move := []int{0, 0}
+			board.AddMove(move)
+			Expect(board.WouldBlock(move)).To(BeFalse())
+		})
+
+		It("returns false if not a block available", func() {
+			Expect(board.WouldBlock([]int{0, 0})).To(BeFalse())
+		})
+
+		It("returns true if it would block a win", func() {
+			makeMoves(board, [][]int{{0, 0}, {1, 0}, {0, 1}})
+			Expect(board.WouldBlock([]int{0, 2})).To(BeTrue())
+		})
+	})
 }
 
 func makeDraw(board interfaces.Board) {
-	board.AddMove([]int{0, 0})
-	board.AddMove([]int{0, 2})
-	board.AddMove([]int{0, 1})
-	board.AddMove([]int{1, 0})
-	board.AddMove([]int{1, 1})
-	board.AddMove([]int{2, 1})
-	board.AddMove([]int{1, 2})
-	board.AddMove([]int{2, 2})
-	board.AddMove([]int{2, 0})
+	makeMoves(board, [][]int{{0, 0}, {0, 2}, {0, 1}, {1, 0}, {1, 1}, {2, 1}, {1, 2}, {2, 2}, {2, 0}})
+}
+
+func makeMoves(board interfaces.Board, moves [][]int) {
+	for _, move := range moves {
+		board.AddMove(move)
+	}
 }

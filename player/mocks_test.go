@@ -13,6 +13,11 @@ type mockBoard struct {
 	turn           string
 }
 
+func (m mockBoard) WouldBlock(position []int) bool {
+	row, col := position[0], position[1]
+	return row == m.blockRow && col == m.blockCol
+}
+
 func (m mockBoard) WouldWin(position []int) bool {
 	row, col := position[0], position[1]
 	return row == m.winRow && col == m.winCol

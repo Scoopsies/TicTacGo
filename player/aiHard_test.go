@@ -43,12 +43,26 @@ var _ = Describe("AiHard", func() {
 				move := aiHard.PickMove(board)
 				Expect(move).To(Equal(winningMove))
 			})
+
+			It("picks a win over a block", func() {
+				winningMove := []int{0, 0}
+				board := mockBoard{blockRow: 3, blockCol: 3, turn: "X", availableMoves: [][]int{{3, 3}, winningMove}}
+				move := aiHard.PickMove(board)
+				Expect(move).To(Equal(winningMove))
+			})
 		})
 
 		Context("picks a block if win isn't available", func() {
 			It("if block is first available move", func() {
-				blockMove := []int{0, 0}
+				blockMove := []int{1, 1}
 				board := mockBoard{winRow: 1, winCol: 1, turn: "X", availableMoves: [][]int{blockMove}}
+				move := aiHard.PickMove(board)
+				Expect(move).To(Equal(blockMove))
+			})
+
+			It("picks a block if it is not the first available move", func() {
+				blockMove := []int{0, 0}
+				board := mockBoard{winRow: 1, winCol: 1, turn: "X", availableMoves: [][]int{{3, 3}, blockMove}}
 				move := aiHard.PickMove(board)
 				Expect(move).To(Equal(blockMove))
 			})

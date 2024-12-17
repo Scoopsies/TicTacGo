@@ -5,6 +5,10 @@ type mockBoard struct {
 	cells [][]string
 }
 
+func (m mockBoard) WouldBlock(position []int) bool {
+	return false
+}
+
 func (m mockBoard) WouldWin(position []int) bool {
 	return true
 }

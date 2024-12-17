@@ -13,6 +13,10 @@ type MockBoard struct {
 	errorMove bool
 }
 
+func (m *MockBoard) WouldBlock(position []int) bool {
+	return false
+}
+
 func (m *MockBoard) WouldWin(position []int) bool {
 	return true
 }

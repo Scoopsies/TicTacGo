@@ -22,6 +22,13 @@ func (a AiHard) PickMove(board interfaces.Board) []int {
 			return move
 		}
 	}
+
+	for _, move := range availableMoves {
+		if board.WouldBlock(move) {
+			return move
+		}
+	}
+
 	return availableMoves[0]
 }
 

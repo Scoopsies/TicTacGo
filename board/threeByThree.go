@@ -1,10 +1,33 @@
 package board
 
-import "fmt"
+import (
+	"TicTacGo/interfaces"
+	"fmt"
+)
 
 type ThreeByThree struct {
 	size  int
 	cells [][]string
+}
+
+func getOppToken(board interfaces.Board) string {
+	if board.GetTurn() == "X" {
+		return "O"
+	} else {
+		return "X"
+	}
+}
+
+func (b *ThreeByThree) WouldBlock(position []int) bool {
+	row, col := position[0], position[1]
+	if isNotInBounds(b, row, col) || isOccupied(b, row, col) {
+		return false
+	}
+
+	token := getOppToken(b)
+	cells := b.GetCells()
+	cells[row][col] = token
+	return HasWin(cells, token)
 }
 
 func (b *ThreeByThree) WouldWin(position []int) bool {

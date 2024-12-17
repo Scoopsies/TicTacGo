@@ -8,4 +8,5 @@ type Board interface {
 	GetAvailableMoves() [][]int
 	GetTurn() string
 	WouldWin(position []int) bool
+	WouldBlock(position []int) bool
 }
