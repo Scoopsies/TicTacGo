@@ -28,30 +28,30 @@ func CopyCells(cells [][]string) [][]string {
 
 func rotateCells(cells [][]string) [][]string {
 	numRows := len(cells)
-	rotatedCells := CopyCells(cells)
+	copiedCells := CopyCells(cells)
 
 	for rowIdx, row := range cells {
 		for colIdx, cell := range row {
-			rotatedCells[colIdx][numRows-1-rowIdx] = cell
+			copiedCells[colIdx][numRows-1-rowIdx] = cell
 		}
 	}
-	return rotatedCells
+	return copiedCells
 }
 
-func hasColWin(cells [][]string, token string) bool {
-	cells = rotateCells(cells)
-	return hasRowWin(cells, token)
+func hasColWin(rotatedCells [][]string, token string) bool {
+	rotatedCells = rotateCells(rotatedCells)
+	return hasRowWin(rotatedCells, token)
 }
 
 func mirrorCells(cells [][]string) [][]string {
-	mirroredCells := CopyCells(cells)
+	copiedCells := CopyCells(cells)
 
 	for rowIdx, row := range cells {
 		for colIdx, cell := range row {
-			mirroredCells[rowIdx][len(row)-1-colIdx] = cell
+			copiedCells[rowIdx][len(row)-1-colIdx] = cell
 		}
 	}
-	return mirroredCells
+	return copiedCells
 }
 
 func hasForwardDiagonalWin(cells [][]string, token string) bool {
