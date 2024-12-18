@@ -101,7 +101,7 @@ var _ = Describe("Config", func() {
 
 			It("prompts user if given invalid input, and then asks them to choose again", func() {
 				computer, _ := factory.NewPlayer("aiEasy", "Cody Ai X", nil)
-				player := runConfigPlayer(renderer, &mockInput{[]string{"computer", "bad input", "Easy"}}, "X")
+				player := runConfigPlayer(renderer, &mockInput{[]string{"computer", "bad input", "", "Easy"}}, "X")
 				Expect(renderer.Messages).To(ContainElement("bad input is not a valid difficulty."))
 				Expect(player).To(Equal(computer))
 			})
