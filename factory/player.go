@@ -8,14 +8,14 @@ import (
 
 func NewPlayer(playerType, name string, input interfaces.Input) (interfaces.Player, error) {
 	switch playerType {
-	case "human":
-		return player.NewHuman(name, input), nil
 	case "aiHard":
 		return player.NewAiHard(name), nil
-	case "aiMedium":
-		return player.NewAiMedium(name), nil
 	case "aiEasy":
 		return player.NewAiEasy(name), nil
+	case "aiMedium":
+		return player.NewAiMedium(name), nil
+	case "human":
+		return player.NewHuman(name, input), nil
 
 	default:
 		return nil, fmt.Errorf("unsupported player type: %s", playerType)
