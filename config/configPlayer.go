@@ -12,8 +12,7 @@ func getLowerInput(input interfaces.Input) string {
 
 func getHumanPlayer(renderer interfaces.Renderer, input interfaces.Input, token string) interfaces.Player {
 	renderer.RenderMessage("\nWhat is Player " + token + "'s name?")
-	name := input.GetInput()
-	player, _ := factory.NewPlayer("human", name, input)
+	player, _ := factory.NewPlayer("human", input.GetInput(), input)
 	return player
 }
 
