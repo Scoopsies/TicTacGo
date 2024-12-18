@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+const CliTitle = "▗▄▄▄▖▄ ▗▞▀▘    ▗▄▄▄▖▗▞▀▜▌▗▞▀▘     ▗▄▄▖ ▄▄▄  \n  █  ▄ ▝▚▄▖      █  ▝▚▄▟▌▝▚▄▖    ▐▌   █   █ \n  █  █           █               ▐▌▝▜▌▀▄▄▄▀ \n  █  █           █               ▝▚▄▞▘      "
+
 type CliRenderer struct{}
 
 func NewCliRenderer() *CliRenderer {
@@ -42,11 +44,15 @@ func CellsToString(board interfaces.Board) string {
 	}
 }
 
-func (r CliRenderer) Render(board interfaces.Board) {
+func (r CliRenderer) RenderBoard(board interfaces.Board) {
 	cellString := CellsToString(board)
 	fmt.Println("")
 	fmt.Println(cellString)
 	fmt.Println("")
+}
+
+func (r CliRenderer) RenderTitle() {
+	fmt.Println(CliTitle)
 }
 
 func (r CliRenderer) RenderMessage(message string) {

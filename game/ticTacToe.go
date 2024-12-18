@@ -39,12 +39,12 @@ func maybeRenderError(err error, renderer interfaces.Renderer) {
 }
 
 func renderMovePrompt(renderer interfaces.Renderer, player interfaces.Player, board interfaces.Board) {
-	renderer.Render(board)
+	renderer.RenderBoard(board)
 	renderer.RenderMessage("It's " + player.GetName() + "'s turn.")
 }
 
 func renderEndScreen(renderer interfaces.Renderer, playerX, playerO interfaces.Player, board interfaces.Board) {
-	renderer.Render(board)
+	renderer.RenderBoard(board)
 	switch board.GetState() {
 	case "draw":
 		renderer.RenderMessage("No winners this time. Draw.")

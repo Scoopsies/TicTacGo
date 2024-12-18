@@ -80,8 +80,11 @@ type MockRenderer struct {
 	Called         []string
 }
 
-func (m *MockRenderer) Render(board interfaces.Board) {
-	m.Called = append(m.Called, "Render")
+func (m *MockRenderer) RenderTitle() {
+}
+
+func (m *MockRenderer) RenderBoard(board interfaces.Board) {
+	m.Called = append(m.Called, "RenderBoard")
 	m.RenderedBoards = append(m.RenderedBoards, board)
 }
 

@@ -1,6 +1,7 @@
 package interfaces
 
 type Renderer interface {
-	Render(board Board)
+	RenderBoard(board Board)
 	RenderMessage(message string)
+	RenderTitle()
 }

@@ -61,7 +61,7 @@ var _ = Describe("CliRenderer", func() {
 		})
 	})
 
-	Context("Render", func() {
+	Context("RenderBoard", func() {
 		It("prints an empty board", func() {
 			renderer := sut.NewCliRenderer()
 			board := mockBoard{
@@ -70,7 +70,7 @@ var _ = Describe("CliRenderer", func() {
 			}
 
 			output := captureOutput(func() {
-				renderer.Render(board)
+				renderer.RenderBoard(board)
 			})
 
 			expected := "\n" + sut.CellsToString(board) + "\n\n"
@@ -95,6 +95,16 @@ var _ = Describe("CliRenderer", func() {
 			})
 
 			Expect(output).To(Equal("This is a different message\n\n"))
+		})
+	})
+
+	Context("RenderTitle", func() {
+		It("renders the title", func() {
+			renderer := sut.NewCliRenderer()
+			output := captureOutput(func() {
+				renderer.RenderTitle()
+			})
+			Expect(output).To(Equal(sut.CliTitle + "\n"))
 		})
 	})
 

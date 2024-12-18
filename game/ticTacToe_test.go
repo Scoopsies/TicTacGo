@@ -68,7 +68,7 @@ var _ = Describe("Game", func() {
 			})
 
 			It("Announces the game was a draw.", func() {
-				Expect(renderer.Called).To(ContainElement("Render"))
+				Expect(renderer.Called).To(ContainElement("RenderBoard"))
 				Expect(renderer.Messages).To(ContainElement("No winners this time. Draw."))
 			})
 
@@ -101,7 +101,7 @@ var _ = Describe("Game", func() {
 			})
 
 			It("Announces the game was a draw.", func() {
-				Expect(renderer.Called).To(ContainElement("Render"))
+				Expect(renderer.Called).To(ContainElement("RenderBoard"))
 				Expect(renderer.Messages).To(ContainElement("No winners this time. Draw."))
 			})
 
