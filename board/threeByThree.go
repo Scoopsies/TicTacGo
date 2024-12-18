@@ -13,39 +13,33 @@ type ThreeByThree struct {
 func (b *ThreeByThree) Copy() interfaces.Board {
 	cells := CopyCells(b.cells)
 	size := b.size
-	return &ThreeByThree{size: size, cells: cells}
+	return &ThreeByThree{size, cells}
 }
 
 func getOppToken(board interfaces.Board) string {
 	if board.GetTurn() == "X" {
 		return "O"
-	} else {
-		return "X"
 	}
+	return "X"
+}
+
+func (b *ThreeByThree) WouldResultInWin(position []int, token string) bool {
+	row, col := position[0], position[1]
+	if isNotInBounds(b, row, col) || isOccupied(b, row, col) {
+		return false
+	}
+
+	cells := b.GetCells()
+	cells[row][col] = token
+	return HasWin(cells, token)
 }
 
 func (b *ThreeByThree) WouldBlock(position []int) bool {
-	row, col := position[0], position[1]
-	if isNotInBounds(b, row, col) || isOccupied(b, row, col) {
-		return false
-	}
-
-	token := getOppToken(b)
-	cells := b.GetCells()
-	cells[row][col] = token
-	return HasWin(cells, token)
+	return b.WouldResultInWin(position, getOppToken(b))
 }
 
 func (b *ThreeByThree) WouldWin(position []int) bool {
-	row, col := position[0], position[1]
-	if isNotInBounds(b, row, col) || isOccupied(b, row, col) {
-		return false
-	}
-
-	token := b.GetTurn()
-	cells := b.GetCells()
-	cells[row][col] = token
-	return HasWin(cells, token)
+	return b.WouldResultInWin(position, b.GetTurn())
 }
 
 func NewThreeByThree() *ThreeByThree {
@@ -56,7 +50,6 @@ func NewThreeByThree() *ThreeByThree {
 }
 
 func (b *ThreeByThree) GetCells() [][]string {
-
 	return CopyCells(b.cells)
 }
 
@@ -140,8 +133,7 @@ func isOccupied(b *ThreeByThree, row, column int) bool {
 }
 
 func (b *ThreeByThree) AddMove(position []int) error {
-	row := position[0]
-	column := position[1]
+	row, column := position[0], position[1]
 	switch {
 	case isNotInBounds(b, row, column):
 		return fmt.Errorf("invalid move: out of bounds")
