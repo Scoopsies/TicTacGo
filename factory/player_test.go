@@ -34,5 +34,11 @@ var _ = Describe("Player", func() {
 			expectedPlayer := player.NewAiEasy("Cody Ai")
 			Expect(expectedPlayer).To(Equal(aiEasy))
 		})
+
+		It("returns an AiMedium player", func() {
+			aiEasy, _ := sut.NewPlayer("aiMedium", "Cody Ai", nil)
+			expectedPlayer := player.NewAiMedium("Cody Ai")
+			Expect(expectedPlayer).To(Equal(aiEasy))
+		})
 	})
 })

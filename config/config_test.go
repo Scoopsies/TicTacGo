@@ -40,9 +40,14 @@ var _ = Describe("Config", func() {
 			expectPromptToContain(renderer, "\nWhat is Player O's name?", &mockInput{[]string{"human", "Scoops"}}, "O")
 		})
 
-		It("it does not prompt if user selects computer", func() {
-			runConfigPlayer(renderer, &mockInput{[]string{"Computer"}}, "X")
+		It("it does not prompt for name if user selects computer", func() {
+			runConfigPlayer(renderer, &mockInput{[]string{"Computer", "Hard"}}, "X")
 			Expect(renderer.Messages).To(Not(ContainElement("What is Player X's name?")))
+		})
+
+		It("it prompts difficulty selection if player selects computer", func() {
+			runConfigPlayer(renderer, &mockInput{[]string{"Computer", "Hard"}}, "X")
+			Expect(renderer.Messages).To(ContainElement("\nWhat difficulty for Computer X?\nEasy, Medium, or Hard"))
 		})
 
 		Context("returns a human player", func() {
@@ -72,19 +77,38 @@ var _ = Describe("Config", func() {
 		Context("returns a computer player if user selects computer", func() {
 			It("named Cody Ai X for X", func() {
 				computer, _ := factory.NewPlayer("aiHard", "Cody Ai X", nil)
-				player := runConfigPlayer(renderer, &mockInput{[]string{"computer"}}, "X")
+				player := runConfigPlayer(renderer, &mockInput{[]string{"computer", "Hard"}}, "X")
 				Expect(player).To(Equal(computer))
 			})
 
 			It("named Cody Ai O for O", func() {
 				computer, _ := factory.NewPlayer("aiHard", "Cody Ai O", nil)
-				player := runConfigPlayer(renderer, &mockInput{[]string{"computer"}}, "O")
+				player := runConfigPlayer(renderer, &mockInput{[]string{"computer", "Hard"}}, "O")
+				Expect(player).To(Equal(computer))
+			})
+
+			It("returns a aiMedium if user selects medium", func() {
+				computer, _ := factory.NewPlayer("aiMedium", "Cody Ai O", nil)
+				player := runConfigPlayer(renderer, &mockInput{[]string{"computer", "Medium"}}, "O")
+				Expect(player).To(Equal(computer))
+			})
+
+			It("returns a aiEasy if user selects easy", func() {
+				computer, _ := factory.NewPlayer("aiEasy", "Cody Ai X", nil)
+				player := runConfigPlayer(renderer, &mockInput{[]string{"computer", "Easy"}}, "X")
+				Expect(player).To(Equal(computer))
+			})
+
+			It("prompts user if given invalid input, and then asks them to choose again", func() {
+				computer, _ := factory.NewPlayer("aiEasy", "Cody Ai X", nil)
+				player := runConfigPlayer(renderer, &mockInput{[]string{"computer", "bad input", "Easy"}}, "X")
+				Expect(renderer.Messages).To(ContainElement("bad input is not a valid difficulty."))
 				Expect(player).To(Equal(computer))
 			})
 
 			It("even if computer is capitalized.", func() {
 				computer, _ := factory.NewPlayer("aiHard", "Cody Ai O", nil)
-				player := runConfigPlayer(renderer, &mockInput{[]string{"COMPUTER"}}, "O")
+				player := runConfigPlayer(renderer, &mockInput{[]string{"COMPUTER", "HARD"}}, "O")
 				Expect(player).To(Equal(computer))
 			})
 		})
