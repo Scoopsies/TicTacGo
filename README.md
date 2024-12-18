@@ -14,7 +14,7 @@ git clone git@github.com:Scoopsies/TicTacGo.git
 
 Run the program:
 ```
-cd TicTacToeGo
+cd TicTacGo
 go run .
 ```
 ---
