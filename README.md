@@ -1,5 +1,22 @@
 # TicTacGo
 
+Tic Tac Go is a Tic Tac Toe game created in GO over the course of 5 days. It its played in the terminal.
+
+It can be played:
+- Human vs Human
+- Human vs Computer
+- Computer vs Human
+- Computer vs Human
+
+It has three difficulty levels for the computer:
+- Easy
+- Medium
+- Hard
+
+---
+
+### How to install and play:
+
 Start by verifying that you have go installed:
 ```
 go version
