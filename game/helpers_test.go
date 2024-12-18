@@ -50,7 +50,7 @@ func PlayGameTest(playerToken string) {
 	})
 
 	It("should render the game board", func() {
-		Expect(renderer.Called).To(ContainElement("Render"))
+		Expect(renderer.Called).To(ContainElement("RenderBoard"))
 	})
 
 	It("should prompt the current player to make move", func() {
@@ -68,7 +68,7 @@ func PlayGameTest(playerToken string) {
 	})
 
 	It("announces the winner", func() {
-		Expect(renderer.Called).To(ContainElement("Render"))
+		Expect(renderer.Called).To(ContainElement("RenderBoard"))
 		Expect(renderer.Messages).To(ContainElement("Player " + playerToken + " wins!"))
 	})
 
