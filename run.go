@@ -11,6 +11,7 @@ func run(rendererType, inputType, boardType string) error {
 	if rErr != nil {
 		return rErr
 	}
+	renderer.RenderTitle()
 
 	input, iErr := factory.NewInput(inputType)
 	if iErr != nil {
