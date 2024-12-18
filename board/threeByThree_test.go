@@ -6,6 +6,12 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+func addMoves(board interfaces.Board, moves [][]int) {
+	for _, move := range moves {
+		board.AddMove(move)
+	}
+}
+
 var _ = Describe("ThreeByThree", func() {
 	threeByThreeTests()
 })
@@ -48,15 +54,14 @@ func threeByThreeTests() {
 			Expect(err.Error()).To(ContainSubstring("cell already occupied"))
 		})
 
-		It("plays X on [0][0] for first turn", func() {
+		It("plays X on first turn", func() {
 			board.AddMove([]int{0, 0})
 			cell00 := board.GetCells()[0][0]
 			Expect(cell00).To(Equal("X"))
 		})
 
 		It("plays O on second turn", func() {
-			board.AddMove([]int{0, 0})
-			board.AddMove([]int{1, 1})
+			addMoves(board, [][]int{{0, 0}, {1, 1}})
 			cell11 := board.GetCells()[1][1]
 			Expect(cell11).To(Equal("O"))
 		})
@@ -74,21 +79,12 @@ func threeByThreeTests() {
 		})
 
 		It("returns winX if x wins", func() {
-			board.AddMove([]int{0, 0})
-			board.AddMove([]int{1, 0})
-			board.AddMove([]int{0, 1})
-			board.AddMove([]int{1, 1})
-			board.AddMove([]int{0, 2})
+			addMoves(board, [][]int{{0, 0}, {1, 0}, {0, 1}, {1, 1}, {0, 2}})
 			Expect(board.GetState()).To(Equal("X"))
 		})
 
 		It("returns winO if o wins", func() {
-			board.AddMove([]int{1, 0})
-			board.AddMove([]int{0, 0})
-			board.AddMove([]int{1, 1})
-			board.AddMove([]int{0, 1})
-			board.AddMove([]int{2, 2})
-			board.AddMove([]int{0, 2})
+			addMoves(board, [][]int{{1, 0}, {0, 0}, {1, 1}, {0, 1}, {2, 2}, {0, 2}})
 			cells := board.GetCells()
 			Expect(HasWin(cells, "X")).To(BeFalse())
 			Expect(HasWin(cells, "O")).To(BeTrue())
@@ -157,10 +153,7 @@ func threeByThreeTests() {
 		})
 
 		It("returns true if it would result in a win for X", func() {
-			board.AddMove([]int{0, 0})
-			board.AddMove([]int{1, 0})
-			board.AddMove([]int{0, 1})
-			board.AddMove([]int{1, 1})
+			addMoves(board, [][]int{{0, 0}, {1, 0}, {0, 1}, {1, 1}})
 			Expect(board.WouldWin([]int{0, 2})).To(BeTrue())
 		})
 
@@ -182,7 +175,7 @@ func threeByThreeTests() {
 		})
 
 		It("returns true if it would block a win", func() {
-			makeMoves(board, [][]int{{0, 0}, {1, 0}, {0, 1}})
+			addMoves(board, [][]int{{0, 0}, {1, 0}, {0, 1}})
 			Expect(board.WouldBlock([]int{0, 2})).To(BeTrue())
 		})
 	})
@@ -202,11 +195,5 @@ func threeByThreeTests() {
 }
 
 func makeDraw(board interfaces.Board) {
-	makeMoves(board, [][]int{{0, 0}, {0, 2}, {0, 1}, {1, 0}, {1, 1}, {2, 1}, {1, 2}, {2, 2}, {2, 0}})
-}
-
-func makeMoves(board interfaces.Board, moves [][]int) {
-	for _, move := range moves {
-		board.AddMove(move)
-	}
+	addMoves(board, [][]int{{0, 0}, {0, 2}, {0, 1}, {1, 0}, {1, 1}, {2, 1}, {1, 2}, {2, 2}, {2, 0}})
 }
